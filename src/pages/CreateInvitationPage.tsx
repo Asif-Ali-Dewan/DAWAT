@@ -75,6 +75,7 @@ export const CreateInvitationPage: React.FC<CreateInvitationPageProps> = ({
     photoStatus: 'unavailable',
     photoUnavailableQuote: 'The photographer is still polishing the memories with love. Please check back shortly!',
     rsvpEnabled: true,
+    showQrCode: true,
     guestCountTarget: 350,
   });
 
@@ -744,6 +745,24 @@ export const CreateInvitationPage: React.FC<CreateInvitationPageProps> = ({
                     type="checkbox"
                     checked={formData.rsvpEnabled}
                     onChange={(e) => setFormData({ ...formData, rsvpEnabled: e.target.checked })}
+                    className="w-5 h-5 accent-[#350010] rounded cursor-pointer"
+                  />
+                </div>
+
+                {/* QR Code Toggle */}
+                <div className="p-4 rounded-2xl bg-stone-50 border border-stone-200 flex items-center justify-between">
+                  <div>
+                    <span className="block text-xs font-bold text-stone-900">
+                      Include QR Code on Ticket Stub
+                    </span>
+                    <span className="text-[11px] text-stone-500">
+                      Adds a scannable QR pass to the stub. If unchecked, an authentic Admit One circular seal is rendered instead.
+                    </span>
+                  </div>
+                  <input
+                    type="checkbox"
+                    checked={formData.showQrCode ?? true}
+                    onChange={(e) => setFormData({ ...formData, showQrCode: e.target.checked })}
                     className="w-5 h-5 accent-[#350010] rounded cursor-pointer"
                   />
                 </div>

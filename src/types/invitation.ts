@@ -67,6 +67,7 @@ export interface Invitation {
   photoStatus: 'available' | 'unavailable';
   photoUnavailableQuote?: string;
   rsvpEnabled: boolean;
+  showQrCode?: boolean;
   guestCountTarget?: number;
   createdAt: string;
   updatedAt: string;

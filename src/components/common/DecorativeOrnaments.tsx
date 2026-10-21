@@ -177,3 +177,49 @@ export const AdmitOneStamp: React.FC<{ color?: string; text?: string; className?
     </div>
   </div>
 );
+
+export const CircularTicketStamp: React.FC<{
+  color?: string;
+  topText?: string;
+  centerText?: string;
+  className?: string;
+}> = ({
+  color = '#D4AF37',
+  topText = 'YOU ARE CORDIALLY INVITED',
+  centerText = 'ADMIT ONE',
+  className = '',
+}) => {
+  const stampId = React.useId().replace(/:/g, '');
+  return (
+    <div className={`relative flex items-center justify-center ${className}`}>
+      <svg width="86" height="86" viewBox="0 0 100 100">
+        <defs>
+          <path
+            id={`stamp-circle-${stampId}`}
+            d="M 50, 50 m -36, 0 a 36,36 0 1,1 72,0 a 36,36 0 1,1 -72,0"
+          />
+        </defs>
+        <circle cx="50" cy="50" r="46" fill="none" stroke={color} strokeWidth="1" strokeDasharray="3 2" opacity="0.6" />
+        <circle cx="50" cy="50" r="28" fill="none" stroke={color} strokeWidth="1.2" opacity="0.8" />
+        <text fill={color} fontSize="7" fontWeight="bold" letterSpacing="1.6" className="uppercase font-mono">
+          <textPath href={`#stamp-circle-${stampId}`} startOffset="50%" textAnchor="middle">
+            {topText} • WEDDING •
+          </textPath>
+        </text>
+        <text
+          x="50"
+          y="53"
+          textAnchor="middle"
+          dominantBaseline="middle"
+          fill={color}
+          fontSize="8"
+          fontWeight="bold"
+          letterSpacing="1"
+          className="font-mono uppercase"
+        >
+          {centerText}
+        </text>
+      </svg>
+    </div>
+  );
+};
