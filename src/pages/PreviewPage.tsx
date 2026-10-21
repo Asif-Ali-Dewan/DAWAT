@@ -76,7 +76,7 @@ export const PreviewPage: React.FC<PreviewPageProps> = ({ slug, onNavigate }) =>
             type="button"
             onClick={() => setDevice('mobile')}
             className={`px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center space-x-1.5 transition ${
-              device === 'mobile' ? 'bg-amber-500 text-stone-950 shadow' : 'text-stone-400 hover:text-white'
+              device === 'mobile' ? 'bg-[#350010] text-[#D4AF37] border border-[#D4AF37]/40 shadow-sm' : 'text-stone-400 hover:text-white'
             }`}
           >
             <Smartphone className="w-4 h-4" />
@@ -87,7 +87,7 @@ export const PreviewPage: React.FC<PreviewPageProps> = ({ slug, onNavigate }) =>
             type="button"
             onClick={() => setDevice('tablet')}
             className={`px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center space-x-1.5 transition ${
-              device === 'tablet' ? 'bg-amber-500 text-stone-950 shadow' : 'text-stone-400 hover:text-white'
+              device === 'tablet' ? 'bg-[#350010] text-[#D4AF37] border border-[#D4AF37]/40 shadow-sm' : 'text-stone-400 hover:text-white'
             }`}
           >
             <Tablet className="w-4 h-4" />
@@ -98,7 +98,7 @@ export const PreviewPage: React.FC<PreviewPageProps> = ({ slug, onNavigate }) =>
             type="button"
             onClick={() => setDevice('desktop')}
             className={`px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center space-x-1.5 transition ${
-              device === 'desktop' ? 'bg-amber-500 text-stone-950 shadow' : 'text-stone-400 hover:text-white'
+              device === 'desktop' ? 'bg-[#350010] text-[#D4AF37] border border-[#D4AF37]/40 shadow-sm' : 'text-stone-400 hover:text-white'
             }`}
           >
             <Monitor className="w-4 h-4" />

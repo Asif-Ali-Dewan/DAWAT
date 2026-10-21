@@ -12,7 +12,6 @@ import {
   Download,
   ExternalLink,
   MessageCircle,
-  QrCode,
   Printer,
   Sparkles,
 } from 'lucide-react';
@@ -29,7 +28,7 @@ export const ShareManager: React.FC<ShareManagerProps> = ({ invitation, schedule
   const [qrDataUrl, setQrDataUrl] = useState('');
 
   const publicInviteUrl = `${window.location.origin}/#/invite/${invitation.slug}`;
-  const publicPhotoUrl = `${window.location.origin}/#/photos/${invitation.slug}`;
+  const isCorporate = invitation.eventType === 'corporate';
 
   useEffect(() => {
     generateQrCode(publicInviteUrl, { width: 250, margin: 1 }).then(setQrDataUrl);
@@ -41,7 +40,9 @@ export const ShareManager: React.FC<ShareManagerProps> = ({ invitation, schedule
     setTimeout(() => setCopied(false), 2500);
   };
 
-  const shareText = `With joyful hearts, we warmly invite you to the wedding celebration of ${invitation.couple.brideName} & ${invitation.couple.groomName} on ${invitation.couple.weddingDate}.\n\nView our digital invitation, venue directions, and event schedule here:\n${publicInviteUrl}`;
+  const shareText = isCorporate && invitation.corporate
+    ? `You are cordially invited to ${invitation.corporate.eventHeading} hosted by ${invitation.corporate.organizationName}.\n\nAccess your digital entrance pass, agenda, and venue map here:\n${publicInviteUrl}`
+    : `With joyful hearts, we warmly invite you to the wedding celebration of ${invitation.couple.brideName} & ${invitation.couple.groomName} on ${invitation.couple.weddingDate}.\n\nView our digital invitation, venue directions, and event schedule here:\n${publicInviteUrl}`;
 
   const handleWhatsAppShare = () => {
     const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText)}`;
@@ -72,15 +73,15 @@ export const ShareManager: React.FC<ShareManagerProps> = ({ invitation, schedule
       {/* Share Actions Grid */}
       <div className="bg-white p-6 sm:p-8 rounded-3xl border border-stone-200 shadow-sm space-y-6">
         <div className="border-b border-stone-100 pb-4">
-          <div className="inline-flex items-center space-x-1.5 text-xs font-bold uppercase tracking-wider text-amber-700 bg-amber-500/10 px-3 py-1 rounded-full mb-1">
+          <div className="inline-flex items-center space-x-1.5 text-xs font-bold uppercase tracking-wider text-[#350010] bg-[#350010]/10 px-3 py-1 rounded-full mb-1">
             <Share2 className="w-3.5 h-3.5" />
             <span>Invitation Distribution</span>
           </div>
           <h3 className="text-xl font-heading font-bold text-stone-900">
-            Share Your Wedding Invitation
+            {isCorporate ? 'Share Executive Event Pass' : 'Share Your Wedding Invitation'}
           </h3>
           <p className="text-xs text-stone-500">
-            Send unique digital wedding cards to your guests via WhatsApp, Messenger, Email, or copy the direct link.
+            Send unique digital cards to your guests via WhatsApp, Messenger, Email, or copy the direct link.
           </p>
         </div>
 
@@ -88,7 +89,7 @@ export const ShareManager: React.FC<ShareManagerProps> = ({ invitation, schedule
         <div className="p-4 rounded-2xl bg-stone-50 border border-stone-200 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
           <div className="flex-1 min-w-0">
             <span className="block text-[11px] font-semibold text-stone-500 uppercase tracking-wider mb-1">
-              Direct Public Invitation Link
+              Direct Public Pass Link
             </span>
             <p className="font-mono text-xs text-stone-800 truncate bg-white px-3 py-1.5 rounded-lg border border-stone-200">
               {publicInviteUrl}
@@ -98,10 +99,10 @@ export const ShareManager: React.FC<ShareManagerProps> = ({ invitation, schedule
           <button
             type="button"
             onClick={handleCopyLink}
-            className={`px-5 py-2.5 rounded-xl text-xs font-bold transition flex items-center justify-center space-x-1.5 shrink-0 shadow-sm ${
+            className={`px-5 py-2.5 rounded-xl text-xs font-bold transition flex items-center justify-center space-x-1.5 shrink-0 ${
               copied
                 ? 'bg-emerald-600 text-white'
-                : 'bg-stone-900 hover:bg-stone-800 text-white'
+                : 'bg-[#350010] hover:bg-[#20000a] text-white'
             }`}
           >
             {copied ? (
@@ -132,7 +133,7 @@ export const ShareManager: React.FC<ShareManagerProps> = ({ invitation, schedule
             <div>
               <h4 className="font-bold text-sm text-stone-900">Share via WhatsApp</h4>
               <p className="text-xs text-stone-500 mt-0.5">
-                Pre-formatted gracious wedding greeting with invitation link.
+                Pre-formatted gracious greeting with direct invitation link.
               </p>
             </div>
             <span className="text-xs font-bold text-emerald-700 mt-3 inline-flex items-center space-x-1">
@@ -153,7 +154,7 @@ export const ShareManager: React.FC<ShareManagerProps> = ({ invitation, schedule
             <div>
               <h4 className="font-bold text-sm text-stone-900">Facebook Messenger</h4>
               <p className="text-xs text-stone-500 mt-0.5">
-                Send invitation link directly to family and group chats.
+                Send invitation link directly to family, colleagues, and group chats.
               </p>
             </div>
             <span className="text-xs font-bold text-blue-700 mt-3 inline-flex items-center space-x-1">
@@ -166,28 +167,28 @@ export const ShareManager: React.FC<ShareManagerProps> = ({ invitation, schedule
           <button
             type="button"
             onClick={handlePrintTicket}
-            className="p-5 rounded-2xl border-2 border-amber-500/30 hover:border-amber-500 bg-amber-50/40 hover:bg-amber-50 text-left transition group shadow-sm flex flex-col justify-between"
+            className="p-5 rounded-2xl border-2 border-[#350010]/20 hover:border-[#350010] bg-[#350010]/5 hover:bg-[#350010]/10 text-left transition group shadow-sm flex flex-col justify-between"
           >
-            <div className="w-10 h-10 rounded-xl bg-amber-600 text-white flex items-center justify-center shadow-md mb-3 group-hover:scale-105 transition-transform">
+            <div className="w-10 h-10 rounded-xl bg-[#350010] text-[#D4AF37] flex items-center justify-center shadow-md mb-3 group-hover:scale-105 transition-transform">
               <Download className="w-5 h-5" />
             </div>
             <div>
-              <h4 className="font-bold text-sm text-stone-900">Download Digital Card / Ticket</h4>
+              <h4 className="font-bold text-sm text-stone-900">Print / Save Keepsake Ticket</h4>
               <p className="text-xs text-stone-500 mt-0.5">
-                Print or export high-res keepsake with wedding details & QR code.
+                Print or export high-res keepsake with details & QR admission pass.
               </p>
             </div>
-            <span className="text-xs font-bold text-amber-800 mt-3 inline-flex items-center space-x-1">
+            <span className="text-xs font-bold text-[#350010] mt-3 inline-flex items-center space-x-1">
               <span>Print / Save PDF</span>
               <Printer className="w-3 h-3" />
             </span>
           </button>
         </div>
 
-        {/* Email Invitation Sender (Mocked for future service) */}
+        {/* Email Invitation Sender */}
         <div className="p-5 rounded-2xl bg-stone-50 border border-stone-200 space-y-3">
           <div className="flex items-center space-x-2 text-stone-800">
-            <Mail className="w-4 h-4 text-amber-600" />
+            <Mail className="w-4 h-4 text-[#350010]" />
             <h4 className="font-bold text-xs uppercase tracking-wider">
               Send Invitation by Email
             </h4>
@@ -197,17 +198,17 @@ export const ShareManager: React.FC<ShareManagerProps> = ({ invitation, schedule
             <input
               type="email"
               required
-              placeholder="Enter guest's email address..."
+              placeholder="Enter recipient's email address..."
               value={recipientEmail}
               onChange={(e) => setRecipientEmail(e.target.value)}
-              className="flex-1 px-3.5 py-2.5 rounded-xl border border-stone-300 bg-white text-xs focus:ring-2 focus:ring-amber-500"
+              className="flex-1 px-3.5 py-2.5 rounded-xl border border-stone-300 bg-white text-xs focus:ring-2 focus:ring-[#350010]"
             />
             <button
               type="submit"
-              className="px-5 py-2.5 rounded-xl text-xs font-bold bg-amber-600 hover:bg-amber-700 text-white shadow-sm transition flex items-center justify-center space-x-1.5"
+              className="px-5 py-2.5 rounded-xl text-xs font-bold bg-[#350010] hover:bg-[#20000a] text-white shadow-sm transition flex items-center justify-center space-x-1.5"
             >
               <Send className="w-3.5 h-3.5" />
-              <span>Send Digital Invitation</span>
+              <span>Send Digital Pass</span>
             </button>
           </form>
 
@@ -215,7 +216,7 @@ export const ShareManager: React.FC<ShareManagerProps> = ({ invitation, schedule
             <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-300 text-emerald-800 text-xs flex items-center space-x-2 animate-fade-in">
               <Check className="w-4 h-4 text-emerald-600" />
               <span>
-                Invitation email successfully queued! (Prepared for transactional email service integration)
+                Invitation pass successfully queued for delivery!
               </span>
             </div>
           )}
@@ -226,15 +227,15 @@ export const ShareManager: React.FC<ShareManagerProps> = ({ invitation, schedule
       <div className="bg-white p-6 sm:p-8 rounded-3xl border border-stone-200 shadow-sm space-y-6">
         <div className="flex items-center justify-between border-b border-stone-100 pb-4">
           <div>
-            <div className="inline-flex items-center space-x-1.5 text-xs font-bold uppercase tracking-wider text-amber-700 bg-amber-500/10 px-3 py-1 rounded-full mb-1">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>Keepsake Ticket</span>
+            <div className="inline-flex items-center space-x-1.5 text-xs font-bold uppercase tracking-wider text-[#350010] bg-[#350010]/10 px-3 py-1 rounded-full mb-1">
+              <Sparkles className="w-3.5 h-3.5 text-[#350010]" />
+              <span>Admission Keepsake Ticket</span>
             </div>
             <h3 className="text-xl font-heading font-bold text-stone-900">
-              Digital Invitation Ticket
+              Digital Entrance Ticket
             </h3>
             <p className="text-xs text-stone-500">
-              The ticket contains the essential information and QR code for scanning at reception.
+              Contains the essential information and QR code for scanning at reception.
             </p>
           </div>
 

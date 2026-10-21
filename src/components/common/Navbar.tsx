@@ -24,24 +24,24 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPath, onNavigate, activeS
   };
 
   return (
-    <header className="sticky top-0 z-40 w-full bg-white/90 dark:bg-stone-900/90 backdrop-blur-md border-b border-stone-200/80 dark:border-stone-800 transition-colors">
+    <header className="sticky top-0 z-40 w-full bg-white border-b border-stone-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         {/* Brand Logo */}
         <button
           type="button"
           onClick={() => handleLinkClick('/')}
-          className="flex items-center space-x-2.5 group focus:outline-none"
+          className="flex items-center space-x-2.5 group focus:outline-none text-left"
         >
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-amber-600 to-amber-400 flex items-center justify-center text-white shadow-md shadow-amber-600/30 group-hover:scale-105 transition-transform">
-            <Heart className="w-5 h-5 fill-white" />
+          <div className="w-9 h-9 rounded-xl bg-[#350010] flex items-center justify-center text-[#D4AF37] shadow group-hover:scale-105 transition-transform">
+            <Heart className="w-5 h-5 fill-current" />
           </div>
-          <div className="text-left">
-            <span className="font-heading text-xl sm:text-2xl font-bold tracking-widest text-stone-900 dark:text-stone-100 flex items-center space-x-1">
+          <div>
+            <span className="font-heading text-xl sm:text-2xl font-bold tracking-widest text-[#350010] flex items-center space-x-1">
               <span>DAWAT</span>
-              <Sparkles className="w-3.5 h-3.5 text-amber-500 fill-amber-400" />
+              <Sparkles className="w-3.5 h-3.5 text-[#D4AF37] fill-[#D4AF37]" />
             </span>
             <span className="block text-[10px] tracking-widest uppercase text-stone-400 font-medium -mt-1">
-              Digital Wedding Suite
+              Digital Invitation Platform
             </span>
           </div>
         </button>
@@ -61,9 +61,9 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPath, onNavigate, activeS
                 onClick={() => handleLinkClick(link.path)}
                 className={`px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium transition flex items-center space-x-1.5 ${
                   isActive
-                    ? 'bg-amber-500/10 text-amber-700 dark:text-amber-400 font-semibold'
-                    : 'text-stone-600 dark:text-stone-300 hover:text-stone-900 dark:hover:text-white hover:bg-stone-100/70 dark:hover:bg-stone-800'
-                } ${link.isExternalGuest ? 'border border-amber-400/40 bg-amber-50/50 text-amber-900' : ''}`}
+                    ? 'bg-[#350010]/10 text-[#350010] font-bold'
+                    : 'text-stone-600 hover:text-stone-900 hover:bg-stone-100'
+                } ${link.isExternalGuest ? 'border border-[#350010]/20 bg-[#350010]/5 text-[#350010]' : ''}`}
               >
                 {Icon && <Icon className="w-3.5 h-3.5" />}
                 <span>{link.label}</span>
@@ -78,9 +78,9 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPath, onNavigate, activeS
           <button
             type="button"
             onClick={() => handleLinkClick('/create')}
-            className="inline-flex items-center space-x-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-stone-900 hover:bg-stone-800 text-white dark:bg-amber-500 dark:text-stone-950 dark:hover:bg-amber-400 shadow-sm transition hover:scale-105 active:scale-95"
+            className="inline-flex items-center space-x-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-[#350010] hover:bg-[#52081d] text-white shadow transition hover:scale-105 active:scale-95"
           >
-            <PlusCircle className="w-4 h-4" />
+            <PlusCircle className="w-4 h-4 text-[#D4AF37]" />
             <span>Create Invitation</span>
           </button>
         </div>
@@ -90,7 +90,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPath, onNavigate, activeS
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 rounded-xl text-stone-600 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800 focus:outline-none"
+            className="p-2 rounded-xl text-stone-600 hover:bg-stone-100 focus:outline-none"
             aria-label="Toggle navigation menu"
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -100,23 +100,23 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPath, onNavigate, activeS
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-b border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-900 px-4 pt-2 pb-4 space-y-1">
+        <div className="md:hidden border-b border-stone-200 bg-white px-4 pt-2 pb-4 space-y-1">
           {navLinks.map((link) => (
             <button
               key={link.path}
               type="button"
               onClick={() => handleLinkClick(link.path)}
-              className="w-full text-left px-3.5 py-2.5 rounded-xl text-sm font-medium text-stone-700 dark:text-stone-200 hover:bg-stone-100 dark:hover:bg-stone-800 flex items-center justify-between"
+              className="w-full text-left px-3.5 py-2.5 rounded-xl text-sm font-medium text-stone-700 hover:bg-stone-100 flex items-center justify-between"
             >
               <span>{link.label}</span>
-              {link.isExternalGuest && <ExternalLink className="w-4 h-4 text-amber-600" />}
+              {link.isExternalGuest && <ExternalLink className="w-4 h-4 text-[#350010]" />}
             </button>
           ))}
           <div className="pt-2">
             <button
               type="button"
               onClick={() => handleLinkClick('/create')}
-              className="w-full py-2.5 text-center rounded-xl text-sm font-semibold bg-amber-600 text-white hover:bg-amber-700 shadow"
+              className="w-full py-2.5 text-center rounded-xl text-sm font-semibold bg-[#350010] text-white hover:bg-[#52081d] shadow"
             >
               + Create New Invitation
             </button>

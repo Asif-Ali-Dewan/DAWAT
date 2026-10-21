@@ -28,6 +28,7 @@ import {
   Smartphone,
   CheckCircle2,
   X,
+  Building2,
 } from 'lucide-react';
 
 interface DashboardPageProps {
@@ -63,12 +64,20 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
 
   // Edit Invitation Form State
   const [editCouple, setEditCouple] = useState(invitation.couple);
+  const [editCorporate, setEditCorporate] = useState(invitation.corporate || {
+    organizationName: '',
+    eventHeading: '',
+    eventSubheading: '',
+    dressCode: 'Executive Formal / Black Tie',
+    chiefGuest: '',
+  });
   const [editVenue, setEditVenue] = useState(invitation.venue);
   const [editReceiver, setEditReceiver] = useState(invitation.receiver);
   const [editSpecialNote, setEditSpecialNote] = useState(invitation.specialNote || '');
   const [isSavingEdit, setIsSavingEdit] = useState(false);
 
   const publicInviteUrl = `${window.location.origin}/#/invite/${invitation.slug}`;
+  const isCorporate = invitation.eventType === 'corporate';
 
   const handleCopyLink = () => {
     navigator.clipboard.writeText(publicInviteUrl);
@@ -82,6 +91,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
     try {
       const updated = await invitationService.updateInvitation(invitation.id, {
         couple: editCouple,
+        corporate: editCorporate,
         venue: editVenue,
         receiver: editReceiver,
         specialNote: editSpecialNote,
@@ -114,11 +124,16 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
     { id: 'edit', label: 'Edit Details', icon: Edit3 },
   ];
 
+  const displayTitle = isCorporate && invitation.corporate
+    ? invitation.corporate.eventHeading
+    : (invitation.couple.coupleDisplayName ||
+       `${invitation.couple.brideName} & ${invitation.couple.groomName}`);
+
   return (
-    <div className="min-h-screen bg-[#faf8f5] py-8 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-[#FAF7F2] py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto space-y-8">
         {/* Top Header Card */}
-        <div className="bg-white p-6 sm:p-8 rounded-3xl border border-stone-200 shadow-sm">
+        <div className="bg-white p-6 sm:p-8 rounded-3xl border border-stone-200">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
             <div className="space-y-2">
               <div className="flex flex-wrap items-center gap-2">
@@ -126,26 +141,37 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                   <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                   <span>{invitation.status}</span>
                 </span>
+                <span className="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-[#350010]/10 text-[#350010] border border-[#350010]/20">
+                  {invitation.eventType.toUpperCase()} CARD
+                </span>
                 <span className="text-xs text-stone-400 font-medium">
-                  Invitation ID: {invitation.id}
+                  ID: {invitation.id}
                 </span>
               </div>
 
               <h1 className="text-2xl sm:text-4xl font-heading font-bold text-stone-900">
-                {invitation.couple.coupleDisplayName ||
-                  `${invitation.couple.brideName} & ${invitation.couple.groomName}`}
+                {displayTitle}
               </h1>
 
               <div className="flex flex-wrap items-center gap-y-1 gap-x-4 text-xs sm:text-sm text-stone-600">
                 <span className="flex items-center space-x-1.5 font-medium">
-                  <Calendar className="w-4 h-4 text-amber-600" />
+                  <Calendar className="w-4 h-4 text-[#350010]" />
                   <span>{formatWeddingDate(invitation.couple.weddingDate)}</span>
                 </span>
                 <span className="text-stone-300">&bull;</span>
                 <span className="flex items-center space-x-1.5 font-medium">
-                  <MapPin className="w-4 h-4 text-amber-600" />
+                  <MapPin className="w-4 h-4 text-[#350010]" />
                   <span>{invitation.venue.venueName}</span>
                 </span>
+                {isCorporate && invitation.corporate?.organizationName && (
+                  <>
+                    <span className="text-stone-300">&bull;</span>
+                    <span className="flex items-center space-x-1.5 font-medium text-stone-800">
+                      <Building2 className="w-4 h-4 text-[#290EA0]" />
+                      <span>{invitation.corporate.organizationName}</span>
+                    </span>
+                  </>
+                )}
               </div>
             </div>
 
@@ -169,7 +195,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                 href={publicInviteUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-4 py-2.5 rounded-2xl text-xs font-bold bg-amber-600 hover:bg-amber-700 text-white shadow-md shadow-amber-600/20 transition flex items-center justify-center space-x-1.5"
+                className="px-4 py-2.5 rounded-2xl text-xs font-bold bg-[#350010] hover:bg-[#20000a] text-white transition flex items-center justify-center space-x-1.5"
               >
                 <Eye className="w-4 h-4" />
                 <span>Guest View</span>
@@ -179,10 +205,10 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
               <button
                 type="button"
                 onClick={() => setPreviewModalOpen(true)}
-                className="px-4 py-2.5 rounded-2xl text-xs font-bold bg-stone-900 hover:bg-stone-800 text-white shadow transition flex items-center justify-center space-x-1.5"
+                className="px-4 py-2.5 rounded-2xl text-xs font-bold bg-stone-900 hover:bg-stone-800 text-white transition flex items-center justify-center space-x-1.5"
               >
                 <Smartphone className="w-4 h-4" />
-                <span>Quick Preview</span>
+                <span>Mobile Preview</span>
               </button>
             </div>
           </div>
@@ -199,7 +225,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                   onClick={() => setActiveTab(tab.id as typeof activeTab)}
                   className={`px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition flex items-center space-x-1.5 shrink-0 ${
                     isActive
-                      ? 'bg-amber-500/15 text-amber-900 font-bold shadow-sm'
+                      ? 'bg-[#350010] text-[#FAF7F2] font-bold'
                       : 'text-stone-600 hover:text-stone-900 hover:bg-stone-100'
                   }`}
                 >
@@ -216,7 +242,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
           <div className="space-y-8 animate-fade-in">
             {/* Quick Stats Grid */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-              <div className="p-5 rounded-2xl bg-white border border-stone-200 shadow-sm space-y-1">
+              <div className="p-5 rounded-2xl bg-white border border-stone-200 space-y-1">
                 <span className="text-xs uppercase tracking-wider font-semibold text-stone-400">
                   Confirmed Guests
                 </span>
@@ -226,39 +252,39 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                 </span>
               </div>
 
-              <div className="p-5 rounded-2xl bg-white border border-stone-200 shadow-sm space-y-1">
+              <div className="p-5 rounded-2xl bg-white border border-stone-200 space-y-1">
                 <span className="text-xs uppercase tracking-wider font-semibold text-stone-400">
-                  Schedule Events
+                  Timeline Events
                 </span>
                 <p className="text-3xl font-bold font-heading text-stone-900">{schedule.length}</p>
-                <span className="text-[11px] text-stone-500">Timelines curated</span>
+                <span className="text-[11px] text-stone-500">Scheduled sessions</span>
               </div>
 
-              <div className="p-5 rounded-2xl bg-white border border-stone-200 shadow-sm space-y-1">
+              <div className="p-5 rounded-2xl bg-white border border-stone-200 space-y-1">
                 <span className="text-xs uppercase tracking-wider font-semibold text-stone-400">
-                  Active Theme
+                  Active Palette
                 </span>
-                <p className="text-xl font-bold font-heading text-amber-700 capitalize">
-                  {invitation.theme.preset}
+                <p className="text-lg font-bold font-heading text-[#350010] truncate">
+                  {invitation.theme.cardVariant || invitation.theme.preset}
                 </p>
-                <span className="text-[11px] text-stone-500">
-                  {invitation.theme.cardLayout} layout
+                <span className="text-[11px] text-stone-500 font-mono">
+                  {invitation.theme.cardColor || '#350010'}
                 </span>
               </div>
 
-              <div className="p-5 rounded-2xl bg-white border border-stone-200 shadow-sm space-y-1">
+              <div className="p-5 rounded-2xl bg-white border border-stone-200 space-y-1">
                 <span className="text-xs uppercase tracking-wider font-semibold text-stone-400">
-                  Photo Status
+                  Photo Folder
                 </span>
                 <p
                   className={`text-xl font-bold font-heading capitalize ${
-                    invitation.photoStatus === 'available' ? 'text-emerald-700' : 'text-amber-600'
+                    invitation.photoStatus === 'available' ? 'text-emerald-700' : 'text-[#350010]'
                   }`}
                 >
                   {invitation.photoStatus}
                 </p>
                 <span className="text-[11px] text-stone-500">
-                  {photos.length} photos ready
+                  {photos.length} photos live
                 </span>
               </div>
             </div>
@@ -267,25 +293,25 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
               <div
                 onClick={() => setActiveTab('customize')}
-                className="p-6 rounded-3xl bg-white border border-stone-200 shadow-sm hover:border-amber-400 hover:shadow-md transition cursor-pointer space-y-3"
+                className="p-6 rounded-3xl bg-white border border-stone-200 hover:border-[#350010] transition cursor-pointer space-y-3 group"
               >
-                <div className="w-12 h-12 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center">
+                <div className="w-12 h-12 rounded-2xl bg-[#350010]/10 text-[#350010] flex items-center justify-center group-hover:bg-[#350010] group-hover:text-[#D4AF37] transition">
                   <Palette className="w-6 h-6" />
                 </div>
-                <h3 className="font-bold text-base text-stone-900">Customize Theme & Styling</h3>
+                <h3 className="font-bold text-base text-stone-900">Customize Theme & Canvas</h3>
                 <p className="text-xs text-stone-500 leading-relaxed">
-                  Change preset aesthetics, typography, royal borders, crests, and luxury foil accents.
+                  Switch between Traditional Desi Royal, Corporate Executive, and Sapphire variants with stardust texture.
                 </p>
               </div>
 
               <div
                 onClick={() => setActiveTab('schedule')}
-                className="p-6 rounded-3xl bg-white border border-stone-200 shadow-sm hover:border-amber-400 hover:shadow-md transition cursor-pointer space-y-3"
+                className="p-6 rounded-3xl bg-white border border-stone-200 hover:border-[#350010] transition cursor-pointer space-y-3 group"
               >
-                <div className="w-12 h-12 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center">
+                <div className="w-12 h-12 rounded-2xl bg-[#350010]/10 text-[#350010] flex items-center justify-center group-hover:bg-[#350010] group-hover:text-[#D4AF37] transition">
                   <Clock className="w-6 h-6" />
                 </div>
-                <h3 className="font-bold text-base text-stone-900">Manage Event Schedule</h3>
+                <h3 className="font-bold text-base text-stone-900">Manage Event Timeline</h3>
                 <p className="text-xs text-stone-500 leading-relaxed">
                   Add, edit, and reorder reception timings, ceremony details, and dining hours.
                 </p>
@@ -293,9 +319,9 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
 
               <div
                 onClick={() => setActiveTab('share')}
-                className="p-6 rounded-3xl bg-white border border-stone-200 shadow-sm hover:border-amber-400 hover:shadow-md transition cursor-pointer space-y-3"
+                className="p-6 rounded-3xl bg-white border border-stone-200 hover:border-[#350010] transition cursor-pointer space-y-3 group"
               >
-                <div className="w-12 h-12 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center">
+                <div className="w-12 h-12 rounded-2xl bg-[#350010]/10 text-[#350010] flex items-center justify-center group-hover:bg-[#350010] group-hover:text-[#D4AF37] transition">
                   <Share2 className="w-6 h-6" />
                 </div>
                 <h3 className="font-bold text-base text-stone-900">Share & Download Ticket</h3>
@@ -317,41 +343,27 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
               />
             </div>
             <div className="lg:col-span-6 sticky top-20">
-              <div className="bg-white p-4 rounded-3xl border border-stone-200 shadow-sm mb-4 flex items-center justify-between">
-                <span className="text-xs font-bold text-stone-800">Live Preview Output</span>
-                <div className="flex items-center space-x-1 bg-stone-100 p-1 rounded-xl">
-                  <button
-                    type="button"
-                    onClick={() => setPreviewViewport('mobile')}
-                    className={`px-3 py-1 rounded-lg text-xs font-semibold ${
-                      previewViewport === 'mobile' ? 'bg-white shadow-sm' : 'text-stone-500'
-                    }`}
-                  >
-                    Mobile
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setPreviewViewport('desktop')}
-                    className={`px-3 py-1 rounded-lg text-xs font-semibold ${
-                      previewViewport === 'desktop' ? 'bg-white shadow-sm' : 'text-stone-500'
-                    }`}
-                  >
-                    Desktop
-                  </button>
+              <div className="bg-white p-4 rounded-3xl border border-stone-200 mb-4 flex items-center justify-between">
+                <div>
+                  <h4 className="text-xs font-bold text-stone-900">Live Card Canvas Preview</h4>
+                  <p className="text-[11px] text-stone-500">Real-time mobile simulation</p>
                 </div>
+                <button
+                  type="button"
+                  onClick={() => setPreviewModalOpen(true)}
+                  className="px-3 py-1.5 rounded-xl text-xs font-bold bg-[#350010] text-[#D4AF37] hover:bg-[#20000a] transition flex items-center space-x-1.5"
+                >
+                  <Eye className="w-3.5 h-3.5" />
+                  <span>Full View</span>
+                </button>
               </div>
 
-              <div
-                className={`overflow-y-auto max-h-[720px] rounded-2xl ${
-                  previewViewport === 'mobile'
-                    ? 'max-w-[400px] mx-auto p-4 bg-stone-900 rounded-[36px] border-4 border-stone-700'
-                    : ''
-                }`}
-              >
+              <div className="max-w-[420px] mx-auto">
                 <InvitationCard
                   invitation={invitation}
                   schedule={schedule}
-                  isMobilePreview={previewViewport === 'mobile'}
+                  isMobilePreview={true}
+                  onNavigateToPhotos={() => onNavigate(`/photos/${invitation.slug}`)}
                 />
               </div>
             </div>
@@ -360,7 +372,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
 
         {/* TAB 3: SCHEDULE */}
         {activeTab === 'schedule' && (
-          <div className="animate-fade-in">
+          <div className="bg-white p-6 sm:p-8 rounded-3xl border border-stone-200 animate-fade-in">
             <ScheduleManager
               invitationId={invitation.id}
               schedule={schedule}
@@ -371,11 +383,10 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
 
         {/* TAB 4: GUESTS */}
         {activeTab === 'guests' && (
-          <div className="animate-fade-in">
+          <div className="bg-white p-6 sm:p-8 rounded-3xl border border-stone-200 animate-fade-in">
             <GuestManager
               invitationId={invitation.id}
               guests={guests}
-              targetCount={invitation.guestCountTarget}
               onGuestsUpdated={onGuestsUpdated}
             />
           </div>
@@ -383,32 +394,19 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
 
         {/* TAB 5: PHOTOS */}
         {activeTab === 'photos' && (
-          <div className="animate-fade-in">
+          <div className="bg-white p-6 sm:p-8 rounded-3xl border border-stone-200 animate-fade-in">
             <PhotoManager
-              invitationId={invitation.id}
-              slug={invitation.slug}
-              photoStatus={invitation.photoStatus}
-              photoFolderUrl={invitation.photoFolderUrl}
-              photoUnavailableQuote={invitation.photoUnavailableQuote}
+              invitation={invitation}
               photos={photos}
-              onConfigUpdated={(updates: {
-                photoStatus: 'available' | 'unavailable';
-                photoFolderUrl?: string;
-                photoUnavailableQuote?: string;
-              }) => {
-                onInvitationUpdated({
-                  ...invitation,
-                  ...updates,
-                });
-              }}
               onPhotosUpdated={onPhotosUpdated}
+              onInvitationUpdated={onInvitationUpdated}
             />
           </div>
         )}
 
         {/* TAB 6: SHARE */}
         {activeTab === 'share' && (
-          <div className="animate-fade-in">
+          <div className="bg-white p-6 sm:p-8 rounded-3xl border border-stone-200 animate-fade-in">
             <ShareManager invitation={invitation} schedule={schedule} />
           </div>
         )}
@@ -417,69 +415,148 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
         {activeTab === 'edit' && (
           <form
             onSubmit={handleSaveDetails}
-            className="bg-white p-6 sm:p-8 rounded-3xl border border-stone-200 shadow-sm space-y-6 animate-fade-in"
+            className="bg-white p-6 sm:p-8 rounded-3xl border border-stone-200 space-y-6 max-w-3xl animate-fade-in"
           >
-            <div className="border-b border-stone-100 pb-4">
-              <h3 className="text-xl font-heading font-bold text-stone-900">
-                Edit Core Wedding Details
-              </h3>
+            <div>
+              <h3 className="text-lg font-bold text-stone-900">Edit Invitation Content</h3>
               <p className="text-xs text-stone-500">
-                Update couple names, venue, timings, or receiver information.
+                Update date, venue, host greetings, and special guest notes.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-xs font-semibold text-stone-700 mb-1">
-                  Bride&apos;s Name
-                </label>
-                <input
-                  type="text"
-                  required
-                  value={editCouple.brideName}
-                  onChange={(e) => setEditCouple({ ...editCouple, brideName: e.target.value })}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 bg-stone-50 text-sm focus:ring-2 focus:ring-amber-500"
-                />
-              </div>
+            {isCorporate ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-semibold text-stone-700 mb-1">
+                    Organization / Host Company
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={editCorporate.organizationName}
+                    onChange={(e) => setEditCorporate({ ...editCorporate, organizationName: e.target.value })}
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 bg-stone-50 text-sm focus:ring-2 focus:ring-[#350010]"
+                  />
+                </div>
 
-              <div>
-                <label className="block text-xs font-semibold text-stone-700 mb-1">
-                  Groom&apos;s Name
-                </label>
-                <input
-                  type="text"
-                  required
-                  value={editCouple.groomName}
-                  onChange={(e) => setEditCouple({ ...editCouple, groomName: e.target.value })}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 bg-stone-50 text-sm focus:ring-2 focus:ring-amber-500"
-                />
-              </div>
+                <div>
+                  <label className="block text-xs font-semibold text-stone-700 mb-1">
+                    Summit / Event Title
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={editCorporate.eventHeading}
+                    onChange={(e) => setEditCorporate({ ...editCorporate, eventHeading: e.target.value })}
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 bg-stone-50 text-sm focus:ring-2 focus:ring-[#350010]"
+                  />
+                </div>
 
-              <div>
-                <label className="block text-xs font-semibold text-stone-700 mb-1">
-                  Wedding Date
-                </label>
-                <input
-                  type="date"
-                  required
-                  value={editCouple.weddingDate}
-                  onChange={(e) => setEditCouple({ ...editCouple, weddingDate: e.target.value })}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 bg-stone-50 text-sm focus:ring-2 focus:ring-amber-500"
-                />
-              </div>
+                <div>
+                  <label className="block text-xs font-semibold text-stone-700 mb-1">
+                    Event Date
+                  </label>
+                  <input
+                    type="date"
+                    required
+                    value={editCouple.weddingDate}
+                    onChange={(e) => setEditCouple({ ...editCouple, weddingDate: e.target.value })}
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 bg-stone-50 text-sm focus:ring-2 focus:ring-[#350010]"
+                  />
+                </div>
 
-              <div>
-                <label className="block text-xs font-semibold text-stone-700 mb-1">
-                  Main Ceremony Time
-                </label>
-                <input
-                  type="text"
-                  value={editCouple.mainEventTime}
-                  onChange={(e) => setEditCouple({ ...editCouple, mainEventTime: e.target.value })}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 bg-stone-50 text-sm focus:ring-2 focus:ring-amber-500"
-                />
-              </div>
+                <div>
+                  <label className="block text-xs font-semibold text-stone-700 mb-1">
+                    Event Time (Keynote Start)
+                  </label>
+                  <input
+                    type="text"
+                    value={editCouple.mainEventTime}
+                    onChange={(e) => setEditCouple({ ...editCouple, mainEventTime: e.target.value })}
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 bg-stone-50 text-sm focus:ring-2 focus:ring-[#350010]"
+                  />
+                </div>
 
+                <div>
+                  <label className="block text-xs font-semibold text-stone-700 mb-1">
+                    Dress Code
+                  </label>
+                  <input
+                    type="text"
+                    value={editCorporate.dressCode || ''}
+                    onChange={(e) => setEditCorporate({ ...editCorporate, dressCode: e.target.value })}
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 bg-stone-50 text-sm focus:ring-2 focus:ring-[#350010]"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-stone-700 mb-1">
+                    Chief Guest / Keynote Speaker
+                  </label>
+                  <input
+                    type="text"
+                    value={editCorporate.chiefGuest || ''}
+                    onChange={(e) => setEditCorporate({ ...editCorporate, chiefGuest: e.target.value })}
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 bg-stone-50 text-sm focus:ring-2 focus:ring-[#350010]"
+                  />
+                </div>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-semibold text-stone-700 mb-1">
+                    Bride&apos;s Name
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={editCouple.brideName}
+                    onChange={(e) => setEditCouple({ ...editCouple, brideName: e.target.value })}
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 bg-stone-50 text-sm focus:ring-2 focus:ring-[#350010]"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-stone-700 mb-1">
+                    Groom&apos;s Name
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={editCouple.groomName}
+                    onChange={(e) => setEditCouple({ ...editCouple, groomName: e.target.value })}
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 bg-stone-50 text-sm focus:ring-2 focus:ring-[#350010]"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-stone-700 mb-1">
+                    Wedding Date
+                  </label>
+                  <input
+                    type="date"
+                    required
+                    value={editCouple.weddingDate}
+                    onChange={(e) => setEditCouple({ ...editCouple, weddingDate: e.target.value })}
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 bg-stone-50 text-sm focus:ring-2 focus:ring-[#350010]"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-stone-700 mb-1">
+                    Main Ceremony Time
+                  </label>
+                  <input
+                    type="text"
+                    value={editCouple.mainEventTime}
+                    onChange={(e) => setEditCouple({ ...editCouple, mainEventTime: e.target.value })}
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 bg-stone-50 text-sm focus:ring-2 focus:ring-[#350010]"
+                  />
+                </div>
+              </div>
+            )}
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2 border-t border-stone-100">
               <div>
                 <label className="block text-xs font-semibold text-stone-700 mb-1">
                   Venue Name
@@ -489,7 +566,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                   required
                   value={editVenue.venueName}
                   onChange={(e) => setEditVenue({ ...editVenue, venueName: e.target.value })}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 bg-stone-50 text-sm focus:ring-2 focus:ring-amber-500"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 bg-stone-50 text-sm focus:ring-2 focus:ring-[#350010]"
                 />
               </div>
 
@@ -502,7 +579,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                   required
                   value={editVenue.mapsUrl}
                   onChange={(e) => setEditVenue({ ...editVenue, mapsUrl: e.target.value })}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 bg-stone-50 text-sm focus:ring-2 focus:ring-amber-500"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 bg-stone-50 text-sm focus:ring-2 focus:ring-[#350010]"
                 />
               </div>
 
@@ -514,7 +591,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                   type="text"
                   value={editVenue.venueAddress}
                   onChange={(e) => setEditVenue({ ...editVenue, venueAddress: e.target.value })}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 bg-stone-50 text-sm focus:ring-2 focus:ring-amber-500"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 bg-stone-50 text-sm focus:ring-2 focus:ring-[#350010]"
                 />
               </div>
 
@@ -526,19 +603,19 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                   type="text"
                   value={editReceiver.receiverName}
                   onChange={(e) => setEditReceiver({ ...editReceiver, receiverName: e.target.value })}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 bg-stone-50 text-sm focus:ring-2 focus:ring-amber-500"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 bg-stone-50 text-sm focus:ring-2 focus:ring-[#350010]"
                 />
               </div>
 
               <div>
                 <label className="block text-xs font-semibold text-stone-700 mb-1">
-                  Receiver Role / Relation
+                  Receiver Role / Host Title
                 </label>
                 <input
                   type="text"
                   value={editReceiver.receiverRole || ''}
                   onChange={(e) => setEditReceiver({ ...editReceiver, receiverRole: e.target.value })}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 bg-stone-50 text-sm focus:ring-2 focus:ring-amber-500"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 bg-stone-50 text-sm focus:ring-2 focus:ring-[#350010]"
                 />
               </div>
 
@@ -550,7 +627,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                   rows={3}
                   value={editSpecialNote}
                   onChange={(e) => setEditSpecialNote(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 bg-stone-50 text-sm focus:ring-2 focus:ring-amber-500"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 bg-stone-50 text-sm focus:ring-2 focus:ring-[#350010]"
                 />
               </div>
             </div>
@@ -566,9 +643,9 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
               <button
                 type="submit"
                 disabled={isSavingEdit}
-                className="px-6 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold shadow flex items-center space-x-1.5 disabled:opacity-50"
+                className="px-6 py-2.5 rounded-xl bg-[#350010] hover:bg-[#20000a] text-white text-xs font-bold flex items-center space-x-1.5 disabled:opacity-50"
               >
-                <CheckCircle2 className="w-4 h-4" />
+                <CheckCircle2 className="w-4 h-4 text-[#D4AF37]" />
                 <span>{isSavingEdit ? 'Saving...' : 'Save Changes'}</span>
               </button>
             </div>
@@ -591,7 +668,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                     type="button"
                     onClick={() => setPreviewViewport('mobile')}
                     className={`px-2.5 py-1 rounded-lg text-xs font-semibold ${
-                      previewViewport === 'mobile' ? 'bg-stone-900 text-white' : 'text-stone-600'
+                      previewViewport === 'mobile' ? 'bg-[#350010] text-white' : 'text-stone-600'
                     }`}
                   >
                     Mobile Phone View
@@ -600,7 +677,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                     type="button"
                     onClick={() => setPreviewViewport('desktop')}
                     className={`px-2.5 py-1 rounded-lg text-xs font-semibold ${
-                      previewViewport === 'desktop' ? 'bg-stone-900 text-white' : 'text-stone-600'
+                      previewViewport === 'desktop' ? 'bg-[#350010] text-white' : 'text-stone-600'
                     }`}
                   >
                     Desktop View
@@ -618,11 +695,11 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
             </div>
 
             {/* Modal Body */}
-            <div className="flex-1 overflow-y-auto p-4 sm:p-8 bg-[#faf8f5]">
+            <div className="flex-1 overflow-y-auto p-4 sm:p-8 bg-[#FAF7F2]">
               <div
                 className={`mx-auto ${
                   previewViewport === 'mobile'
-                    ? 'max-w-[400px] p-4 bg-stone-900 rounded-[36px] border-4 border-stone-700'
+                    ? 'max-w-[420px]'
                     : 'max-w-3xl'
                 }`}
               >

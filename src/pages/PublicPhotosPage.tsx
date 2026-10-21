@@ -5,12 +5,12 @@ import { invitationService } from '../services/invitationService';
 import { photoService } from '../services/photoService';
 import {
   Camera,
-  Heart,
   ArrowLeft,
   ExternalLink,
-  CheckCircle2,
-  X,
+  Heart,
   Maximize2,
+  X,
+  CheckCircle2,
 } from 'lucide-react';
 
 interface PublicPhotosPageProps {
@@ -24,33 +24,26 @@ export const PublicPhotosPage: React.FC<PublicPhotosPageProps> = ({ slug, onNavi
   const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [lightboxPhoto, setLightboxPhoto] = useState<WeddingPhoto | null>(null);
-
-  // Email notification form for "Photos Not Available"
   const [notifyEmail, setNotifyEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
 
   useEffect(() => {
     let isMounted = true;
-    setLoading(true);
-
-    const load = async () => {
+    const loadData = async () => {
       try {
+        setLoading(true);
         const inv = await invitationService.getInvitationBySlug(slug);
         if (!isMounted) return;
-
         if (inv) {
           setInvitation(inv);
-          const p = await photoService.getPhotosByInvitationId(inv.id);
-          if (isMounted) setPhotos(p);
+          const photoList = await photoService.getPhotosByInvitationId(inv.id);
+          if (isMounted) setPhotos(photoList);
         }
-      } catch (err) {
-        console.error('Failed to load photos:', err);
       } finally {
         if (isMounted) setLoading(false);
       }
     };
-
-    load();
+    loadData();
     return () => {
       isMounted = false;
     };
@@ -64,18 +57,20 @@ export const PublicPhotosPage: React.FC<PublicPhotosPageProps> = ({ slug, onNavi
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#faf8f5] flex items-center justify-center p-4">
+      <div className="min-h-screen bg-[#FAF7F2] flex items-center justify-center p-4">
         <div className="text-center space-y-3">
-          <div className="w-12 h-12 rounded-full border-2 border-amber-600 border-t-transparent animate-spin mx-auto" />
-          <p className="text-xs text-stone-600 font-medium">Loading Wedding Photographs...</p>
+          <div className="w-12 h-12 rounded-full border-3 border-[#350010] border-t-transparent animate-spin mx-auto" />
+          <p className="text-xs text-stone-600 font-medium">Loading Photographs...</p>
         </div>
       </div>
     );
   }
 
   const coupleTitle = invitation
-    ? invitation.couple.coupleDisplayName ||
-      `${invitation.couple.brideName} & ${invitation.couple.groomName}`
+    ? (invitation.eventType === 'corporate' && invitation.corporate
+        ? invitation.corporate.eventHeading
+        : (invitation.couple.coupleDisplayName ||
+           `${invitation.couple.brideName} & ${invitation.couple.groomName}`))
     : 'Ayesha & Arif';
 
   const isAvailable = invitation?.photoStatus === 'available';
@@ -86,7 +81,7 @@ export const PublicPhotosPage: React.FC<PublicPhotosPageProps> = ({ slug, onNavi
       : photos.filter((p) => p.category === selectedCategory);
 
   return (
-    <div className="min-h-screen bg-[#faf8f5] text-stone-900 py-8 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-[#FAF7F2] text-stone-900 py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto space-y-8">
         {/* Navigation & Header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-stone-200 pb-6">
@@ -96,7 +91,7 @@ export const PublicPhotosPage: React.FC<PublicPhotosPageProps> = ({ slug, onNavi
             className="inline-flex items-center space-x-2 text-xs font-semibold text-stone-600 hover:text-stone-900 transition"
           >
             <ArrowLeft className="w-4 h-4" />
-            <span>Back to Wedding Invitation</span>
+            <span>Back to Digital Invitation</span>
           </button>
 
           <div className="flex items-center space-x-2">
@@ -112,13 +107,13 @@ export const PublicPhotosPage: React.FC<PublicPhotosPageProps> = ({ slug, onNavi
 
         {/* Hero Section */}
         <div className="text-center max-w-2xl mx-auto space-y-3">
-          <div className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-amber-500/10 text-amber-800 border border-amber-500/20">
-            <Camera className="w-3.5 h-3.5 text-amber-600" />
-            <span>Official Photo Album</span>
+          <div className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-[#350010]/10 text-[#350010] border border-[#350010]/20">
+            <Camera className="w-3.5 h-3.5 text-[#350010]" />
+            <span>Official Event Album</span>
           </div>
 
           <h1 className="text-3xl sm:text-5xl font-heading font-bold text-stone-900">
-            {coupleTitle}&apos;s Memories
+            {coupleTitle}&apos;s Moments
           </h1>
 
           <p className="text-xs sm:text-sm text-stone-600">
@@ -130,7 +125,7 @@ export const PublicPhotosPage: React.FC<PublicPhotosPageProps> = ({ slug, onNavi
         {isAvailable ? (
           <div className="space-y-8 animate-fade-in">
             {/* Category Filter Pills & External Album Link */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-4 rounded-2xl border border-stone-200 shadow-sm">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-4 rounded-2xl border border-stone-200">
               <div className="flex items-center space-x-2 overflow-x-auto pb-1 sm:pb-0">
                 {['All', 'Ceremony', 'Portraits', 'Reception', 'Candid'].map((cat) => (
                   <button
@@ -139,7 +134,7 @@ export const PublicPhotosPage: React.FC<PublicPhotosPageProps> = ({ slug, onNavi
                     onClick={() => setSelectedCategory(cat)}
                     className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition ${
                       selectedCategory === cat
-                        ? 'bg-amber-600 text-white shadow'
+                        ? 'bg-[#350010] text-[#D4AF37] font-bold'
                         : 'bg-stone-100 text-stone-700 hover:bg-stone-200'
                     }`}
                   >
@@ -155,7 +150,7 @@ export const PublicPhotosPage: React.FC<PublicPhotosPageProps> = ({ slug, onNavi
                   rel="noopener noreferrer"
                   className="inline-flex items-center space-x-1.5 px-4 py-2 rounded-xl text-xs font-bold bg-stone-900 text-white hover:bg-stone-800 transition shrink-0"
                 >
-                  <span>Open Full Cloud Album (Original RAW)</span>
+                  <span>Open Cloud Storage (Original RAW)</span>
                   <ExternalLink className="w-3.5 h-3.5 opacity-80" />
                 </a>
               )}
@@ -167,15 +162,15 @@ export const PublicPhotosPage: React.FC<PublicPhotosPageProps> = ({ slug, onNavi
                 <div
                   key={photo.id}
                   onClick={() => setLightboxPhoto(photo)}
-                  className="group relative rounded-3xl overflow-hidden aspect-[4/3] bg-stone-100 shadow-sm border border-stone-200 cursor-pointer"
+                  className="group relative rounded-3xl overflow-hidden aspect-[4/3] bg-stone-100 border border-stone-200 cursor-pointer"
                 >
                   <img
                     src={photo.url}
                     alt={photo.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-stone-950/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-4 flex flex-col justify-end text-white">
-                    <span className="text-[10px] uppercase font-bold tracking-wider text-amber-300">
+                  <div className="absolute inset-0 bg-stone-950/80 opacity-0 group-hover:opacity-100 transition-opacity p-4 flex flex-col justify-end text-white">
+                    <span className="text-[10px] uppercase font-bold tracking-wider text-[#D4AF37]">
                       {photo.category}
                     </span>
                     <h4 className="font-bold text-sm truncate">{photo.title}</h4>
@@ -195,22 +190,22 @@ export const PublicPhotosPage: React.FC<PublicPhotosPageProps> = ({ slug, onNavi
             </div>
           </div>
         ) : (
-          /* STATE B: PHOTOS NOT AVAILABLE (Warm, lighthearted & wedding-themed) */
-          <div className="max-w-xl mx-auto my-12 p-8 sm:p-12 rounded-3xl bg-white border-2 border-amber-300/70 shadow-2xl text-center space-y-6 animate-fade-in">
-            <div className="w-20 h-20 rounded-full bg-amber-50 border-2 border-amber-300 text-amber-700 flex items-center justify-center mx-auto shadow-inner">
+          /* STATE B: PHOTOS NOT AVAILABLE */
+          <div className="max-w-xl mx-auto my-12 p-8 sm:p-12 rounded-3xl bg-white border-2 border-[#D4AF37]/50 text-center space-y-6 animate-fade-in">
+            <div className="w-20 h-20 rounded-full bg-[#350010]/10 border-2 border-[#D4AF37] text-[#350010] flex items-center justify-center mx-auto">
               <Camera className="w-10 h-10 stroke-[1.5]" />
             </div>
 
             <div className="space-y-3">
-              <span className="text-xs font-bold uppercase tracking-widest text-amber-700">
+              <span className="text-xs font-bold uppercase tracking-widest text-[#350010]">
                 Memories In The Making
               </span>
               <h2 className="text-2xl sm:text-3xl font-heading font-bold text-stone-900 leading-snug">
                 {invitation?.photoUnavailableQuote ||
-                  'The photographer is still negotiating with the camera. Please check back soon!'}
+                  'The official media is currently being curated and polished. Please check back soon!'}
               </h2>
               <p className="text-xs sm:text-sm text-stone-500 max-w-md mx-auto leading-relaxed">
-                The magical moments from {coupleTitle}&apos;s wedding are currently being curated, color-graded, and polished to perfection.
+                The magical moments from {coupleTitle}&apos;s celebration are currently being color-graded and prepared for viewing.
               </p>
             </div>
 
@@ -220,7 +215,7 @@ export const PublicPhotosPage: React.FC<PublicPhotosPageProps> = ({ slug, onNavi
                 <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-300 text-emerald-800 text-xs flex items-center justify-center space-x-2">
                   <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
                   <span>
-                    You will receive an instant notification as soon as the wedding photos are unveiled!
+                    You will receive an instant notification as soon as the gallery is unveiled!
                   </span>
                 </div>
               ) : (
@@ -235,11 +230,11 @@ export const PublicPhotosPage: React.FC<PublicPhotosPageProps> = ({ slug, onNavi
                       placeholder="Enter your email address..."
                       value={notifyEmail}
                       onChange={(e) => setNotifyEmail(e.target.value)}
-                      className="flex-1 px-3.5 py-2.5 rounded-xl border border-stone-300 bg-stone-50 text-xs focus:ring-2 focus:ring-amber-500"
+                      className="flex-1 px-3.5 py-2.5 rounded-xl border border-stone-300 bg-stone-50 text-xs focus:ring-2 focus:ring-[#350010]"
                     />
                     <button
                       type="submit"
-                      className="px-5 py-2.5 rounded-xl text-xs font-bold bg-amber-600 hover:bg-amber-700 text-white shadow transition shrink-0"
+                      className="px-5 py-2.5 rounded-xl text-xs font-bold bg-[#350010] hover:bg-[#20000a] text-white transition shrink-0"
                     >
                       Notify Me
                     </button>
@@ -252,9 +247,9 @@ export const PublicPhotosPage: React.FC<PublicPhotosPageProps> = ({ slug, onNavi
               <button
                 type="button"
                 onClick={() => onNavigate(`/invite/${slug}`)}
-                className="inline-flex items-center space-x-1.5 text-xs font-bold text-amber-800 hover:text-amber-950 underline underline-offset-4"
+                className="inline-flex items-center space-x-1.5 text-xs font-bold text-[#350010] hover:text-black underline underline-offset-4"
               >
-                <span>Return to Wedding Schedule & Venue</span>
+                <span>Return to Schedule & Venue Map</span>
               </button>
             </div>
           </div>
@@ -267,7 +262,7 @@ export const PublicPhotosPage: React.FC<PublicPhotosPageProps> = ({ slug, onNavi
               <button
                 type="button"
                 onClick={() => setLightboxPhoto(null)}
-                className="absolute -top-12 right-0 p-2 text-white hover:text-amber-400 transition"
+                className="absolute -top-12 right-0 p-2 text-white hover:text-[#D4AF37] transition"
               >
                 <X className="w-6 h-6" />
               </button>
@@ -278,7 +273,7 @@ export const PublicPhotosPage: React.FC<PublicPhotosPageProps> = ({ slug, onNavi
               />
               <div className="mt-3 text-center text-white">
                 <p className="font-bold text-sm">{lightboxPhoto.title}</p>
-                <span className="text-xs text-amber-300 uppercase tracking-wider">
+                <span className="text-xs text-[#D4AF37] uppercase tracking-wider">
                   {lightboxPhoto.category}
                 </span>
               </div>

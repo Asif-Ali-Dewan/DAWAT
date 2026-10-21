@@ -101,7 +101,7 @@ export const GuestManager: React.FC<GuestManagerProps> = ({
         <div className="p-5 rounded-2xl bg-white border border-stone-200 shadow-sm space-y-1">
           <div className="flex items-center justify-between text-stone-400">
             <span className="text-xs uppercase tracking-wider font-semibold">RSVP Entries</span>
-            <Users className="w-4 h-4 text-amber-600" />
+            <Users className="w-4 h-4 text-[#350010]" />
           </div>
           <p className="text-2xl font-bold font-heading text-stone-900">{guests.length}</p>
           <span className="text-[11px] text-stone-500">Registered parties</span>
@@ -119,7 +119,7 @@ export const GuestManager: React.FC<GuestManagerProps> = ({
         <div className="p-5 rounded-2xl bg-white border border-stone-200 shadow-sm space-y-1">
           <div className="flex items-center justify-between text-stone-400">
             <span className="text-xs uppercase tracking-wider font-semibold">Pending</span>
-            <Clock className="w-4 h-4 text-amber-500" />
+            <Clock className="w-4 h-4 text-[#290EA0]" />
           </div>
           <p className="text-2xl font-bold font-heading text-stone-900">{pendingCount}</p>
           <span className="text-[11px] text-stone-500">Awaiting response</span>
@@ -141,7 +141,7 @@ export const GuestManager: React.FC<GuestManagerProps> = ({
           <button
             type="button"
             onClick={() => setIsAdding(!isAdding)}
-            className="inline-flex items-center space-x-1.5 px-4 py-2 rounded-xl text-xs font-bold bg-amber-600 hover:bg-amber-700 text-white shadow-sm transition"
+            className="inline-flex items-center space-x-1.5 px-4 py-2 rounded-xl text-xs font-bold bg-[#350010] hover:bg-[#20000a] text-white shadow-sm transition"
           >
             <Plus className="w-4 h-4" />
             <span>Add Guest Manually</span>
@@ -152,10 +152,10 @@ export const GuestManager: React.FC<GuestManagerProps> = ({
         {isAdding && (
           <form
             onSubmit={handleAddGuest}
-            className="p-5 rounded-2xl bg-amber-50/50 border border-amber-200/80 space-y-4 animate-fade-in"
+            className="p-5 rounded-2xl bg-[#350010]/5 border border-[#350010]/20 space-y-4 animate-fade-in"
           >
             <div className="flex items-center justify-between">
-              <span className="text-xs font-bold uppercase tracking-wider text-amber-900">
+              <span className="text-xs font-bold uppercase tracking-wider text-[#350010]">
                 New Guest Entry
               </span>
               <button
@@ -178,7 +178,7 @@ export const GuestManager: React.FC<GuestManagerProps> = ({
                   placeholder="e.g. Salman & Sabrina"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl border border-stone-300 bg-white text-xs focus:ring-2 focus:ring-amber-500"
+                  className="w-full px-3 py-2 rounded-xl border border-stone-300 bg-white text-xs focus:ring-2 focus:ring-[#350010]"
                 />
               </div>
 
@@ -191,7 +191,7 @@ export const GuestManager: React.FC<GuestManagerProps> = ({
                   placeholder="salman@example.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl border border-stone-300 bg-white text-xs focus:ring-2 focus:ring-amber-500"
+                  className="w-full px-3 py-2 rounded-xl border border-stone-300 bg-white text-xs focus:ring-2 focus:ring-[#350010]"
                 />
               </div>
 
@@ -204,7 +204,7 @@ export const GuestManager: React.FC<GuestManagerProps> = ({
                   placeholder="+880 1..."
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl border border-stone-300 bg-white text-xs focus:ring-2 focus:ring-amber-500"
+                  className="w-full px-3 py-2 rounded-xl border border-stone-300 bg-white text-xs focus:ring-2 focus:ring-[#350010]"
                 />
               </div>
             </div>
@@ -220,7 +220,7 @@ export const GuestManager: React.FC<GuestManagerProps> = ({
                   max="10"
                   value={numberOfGuests}
                   onChange={(e) => setNumberOfGuests(parseInt(e.target.value, 10) || 1)}
-                  className="w-full px-3 py-2 rounded-xl border border-stone-300 bg-white text-xs focus:ring-2 focus:ring-amber-500"
+                  className="w-full px-3 py-2 rounded-xl border border-stone-300 bg-white text-xs focus:ring-2 focus:ring-[#350010]"
                 />
               </div>
 
@@ -231,7 +231,7 @@ export const GuestManager: React.FC<GuestManagerProps> = ({
                 <select
                   value={status}
                   onChange={(e) => setStatus(e.target.value as Guest['status'])}
-                  className="w-full px-3 py-2 rounded-xl border border-stone-300 bg-white text-xs focus:ring-2 focus:ring-amber-500"
+                  className="w-full px-3 py-2 rounded-xl border border-stone-300 bg-white text-xs focus:ring-2 focus:ring-[#350010]"
                 >
                   <option value="attending">Attending</option>
                   <option value="declined">Declined</option>
@@ -248,7 +248,7 @@ export const GuestManager: React.FC<GuestManagerProps> = ({
                   placeholder="Warm message or blessings..."
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl border border-stone-300 bg-white text-xs focus:ring-2 focus:ring-amber-500"
+                  className="w-full px-3 py-2 rounded-xl border border-stone-300 bg-white text-xs focus:ring-2 focus:ring-[#350010]"
                 />
               </div>
             </div>
@@ -263,7 +263,7 @@ export const GuestManager: React.FC<GuestManagerProps> = ({
               </button>
               <button
                 type="submit"
-                className="px-5 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold shadow"
+                className="px-5 py-2 rounded-xl bg-[#350010] hover:bg-[#20000a] text-white text-xs font-bold shadow"
               >
                 Save Guest
               </button>
@@ -280,7 +280,7 @@ export const GuestManager: React.FC<GuestManagerProps> = ({
               placeholder="Search by name, email, or phone..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-9 pr-3 py-2 rounded-xl border border-stone-300 bg-stone-50 text-xs focus:ring-2 focus:ring-amber-500"
+              className="w-full pl-9 pr-3 py-2 rounded-xl border border-stone-300 bg-stone-50 text-xs focus:ring-2 focus:ring-[#350010]"
             />
           </div>
 
@@ -292,7 +292,7 @@ export const GuestManager: React.FC<GuestManagerProps> = ({
                 onClick={() => setStatusFilter(filter)}
                 className={`px-3 py-1.5 rounded-xl text-xs font-semibold capitalize transition ${
                   statusFilter === filter
-                    ? 'bg-amber-600 text-white shadow-sm'
+                    ? 'bg-[#350010] text-[#D4AF37] font-bold shadow-sm'
                     : 'bg-stone-100 text-stone-600 hover:bg-stone-200'
                 }`}
               >
@@ -342,7 +342,7 @@ export const GuestManager: React.FC<GuestManagerProps> = ({
                             ? 'bg-emerald-100 text-emerald-800'
                             : guest.status === 'declined'
                             ? 'bg-rose-100 text-rose-800'
-                            : 'bg-amber-100 text-amber-800'
+                            : 'bg-[#290EA0]/10 text-[#290EA0]'
                         }`}
                       >
                         {guest.status}

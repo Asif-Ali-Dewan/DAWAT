@@ -4,14 +4,23 @@
   :root {
     --font-heading: 'Cinzel', 'Playfair Display', serif;
     --font-serif: 'Cormorant Garamond', 'Playfair Display', serif;
-    --font-script: 'Alex Brush', 'Great Vibes', cursive;
-    --font-sans: 'Plus Jakarta Sans', 'Outfit', system-ui, sans-serif;
+    --font-script: 'Alex Brush', cursive;
+    --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+
+    /* Palette: Burgundy / Maroon, Royal Sapphire, Antique Gold, Warm Alabaster */
+    --color-burgundy: #350010;
+    --color-burgundy-light: #52081d;
+    --color-sapphire: #290EA0;
+    --color-sapphire-dark: #19086a;
+    --color-gold: #D4AF37;
+    --color-gold-light: #f3df93;
+    --color-ivory: #FAF7F2;
   }
 
   body {
     font-family: var(--font-sans);
-    background-color: #faf8f5;
-    color: #292524;
+    background-color: #fbf9f6;
+    color: #1c1917;
     overflow-x: hidden;
   }
 }
@@ -28,72 +37,50 @@
   font-family: 'Alex Brush', cursive;
 }
 
-.font-playfair {
-  font-family: 'Playfair Display', serif;
+/* Star Dust / Celestial Grain Texture on Solid Cards */
+.stardust-pattern {
+  background-image: 
+    radial-gradient(rgba(212, 175, 55, 0.35) 1px, transparent 1px),
+    radial-gradient(rgba(255, 255, 255, 0.25) 1px, transparent 1px);
+  background-size: 32px 32px, 48px 48px;
+  background-position: 0 0, 16px 16px;
 }
 
-/* Subtle luxury foil & shimmer effect */
-@keyframes shimmer {
-  0% {
-    background-position: -200% 0;
-  }
-  100% {
-    background-position: 200% 0;
-  }
+.subtle-border-gold {
+  border: 1px solid rgba(212, 175, 55, 0.45);
 }
 
-.animate-shimmer {
-  background: linear-gradient(
-    90deg,
-    rgba(212, 175, 55, 0.1) 0%,
-    rgba(255, 230, 160, 0.6) 50%,
-    rgba(212, 175, 55, 0.1) 100%
-  );
-  background-size: 200% 100%;
-  animation: shimmer 4s infinite linear;
+.double-border-gold {
+  border: 2px solid rgba(212, 175, 55, 0.65);
+  box-shadow: inset 0 0 0 3px rgba(53, 0, 16, 0.5), inset 0 0 0 4px rgba(212, 175, 55, 0.4);
 }
 
-.gold-gradient-text {
-  background: linear-gradient(135deg, #c59b27 0%, #e2c068 50%, #b8860b 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+.double-border-sapphire {
+  border: 2px solid rgba(212, 175, 55, 0.65);
+  box-shadow: inset 0 0 0 3px rgba(41, 14, 160, 0.5), inset 0 0 0 4px rgba(212, 175, 55, 0.4);
 }
 
-.silver-gradient-text {
-  background: linear-gradient(135deg, #94a3b8 0%, #cbd5e1 50%, #64748b 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+.corporate-border {
+  border: 1px solid rgba(226, 232, 240, 0.25);
+  box-shadow: inset 0 0 0 1px rgba(212, 175, 55, 0.3);
 }
 
-.rose-gradient-text {
-  background: linear-gradient(135deg, #be185d 0%, #f472b6 50%, #9d174d 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.emerald-gradient-text {
-  background: linear-gradient(135deg, #047857 0%, #34d399 50%, #065f46 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-/* Custom scrollbar for preview & timeline */
+/* Custom crisp scrollbars */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: #d6d3d1;
-  border-radius: 9999px;
+  background: #cbd5e1;
+  border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #a8a29e;
+  background: #94a3b8;
 }
 
-/* Print Styles for Invitation Ticket */
 @media print {
   body {
     background: #fff !important;

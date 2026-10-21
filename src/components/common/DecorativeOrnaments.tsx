@@ -5,23 +5,22 @@ interface OrnamentProps {
   className?: string;
 }
 
-export const GoldDivider: React.FC<OrnamentProps> = ({ color = '#C59B27', className = 'my-6' }) => (
-  <div className={`flex items-center justify-center space-x-3 opacity-80 ${className}`}>
+export const GoldDivider: React.FC<OrnamentProps> = ({ color = '#D4AF37', className = 'my-5' }) => (
+  <div className={`flex items-center justify-center space-x-3 opacity-90 ${className}`}>
     <div className="h-[1px] w-12 sm:w-20 bg-gradient-to-r from-transparent to-current" style={{ color }} />
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="shrink-0">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="shrink-0">
       <path
         d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z"
         fill={color}
-        opacity="0.9"
       />
     </svg>
     <div className="h-[1px] w-12 sm:w-20 bg-gradient-to-l from-transparent to-current" style={{ color }} />
   </div>
 );
 
-export const CornerFlourish: React.FC<{ position: 'tl' | 'tr' | 'bl' | 'br'; color?: string }> = ({
+export const TraditionalCornerFlourish: React.FC<{ position: 'tl' | 'tr' | 'bl' | 'br'; color?: string }> = ({
   position,
-  color = '#C59B27',
+  color = '#D4AF37',
 }) => {
   const getTransform = () => {
     switch (position) {
@@ -51,59 +50,72 @@ export const CornerFlourish: React.FC<{ position: 'tl' | 'tr' | 'bl' | 'br'; col
 
   return (
     <div
-      className={`absolute ${getPositionClass()} pointer-events-none opacity-60 transition-opacity duration-300`}
+      className={`absolute ${getPositionClass()} pointer-events-none opacity-85 transition-opacity duration-300`}
       style={{ transform: getTransform() }}
     >
-      <svg width="36" height="36" viewBox="0 0 48 48" fill="none">
+      <svg width="40" height="40" viewBox="0 0 48 48" fill="none">
         <path
-          d="M4 4C18 4 28 14 28 28V44M4 4V44M4 4H44"
+          d="M3 3H24C24 14.598 14.598 24 3 24V3Z"
+          stroke={color}
+          strokeWidth="1.2"
+          fill="none"
+        />
+        <path
+          d="M3 3V42M3 3H42"
           stroke={color}
           strokeWidth="1.5"
           strokeLinecap="round"
         />
-        <circle cx="12" cy="12" r="3" fill={color} opacity="0.8" />
-        <path d="M4 20C12 20 20 12 20 4" stroke={color} strokeWidth="1" strokeLinecap="round" />
+        <circle cx="8" cy="8" r="2.5" fill={color} />
+        <path d="M12 4C18 10 20 18 20 28" stroke={color} strokeWidth="1" strokeLinecap="round" opacity="0.6" />
       </svg>
     </div>
   );
 };
 
-export const BotanicalCrest: React.FC<OrnamentProps> = ({ color = '#C59B27', className = '' }) => (
-  <div className={`flex justify-center ${className}`}>
-    <svg width="60" height="40" viewBox="0 0 80 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+export const DesiWeddingArch: React.FC<OrnamentProps> = ({ color = '#D4AF37', className = '' }) => (
+  <div className={`flex flex-col items-center justify-center ${className}`}>
+    <svg width="70" height="45" viewBox="0 0 80 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+      {/* Traditional Mehrab Arch */}
       <path
-        d="M40 38C40 38 32 28 20 28C10 28 4 34 4 34C4 34 10 20 24 20C34 20 40 28 40 28C40 28 46 20 56 20C70 20 76 34 76 34C76 34 70 28 60 28C48 28 40 38 40 38Z"
-        fill={color}
-        fillOpacity="0.25"
+        d="M40 4C30 4 20 12 14 26C10 34 10 46 10 46H70C70 46 70 34 66 26C60 12 50 4 40 4Z"
+        stroke={color}
+        strokeWidth="1.5"
+        fill="none"
+        opacity="0.85"
       />
-      <circle cx="40" cy="14" r="5" fill={color} fillOpacity="0.9" />
+      <circle cx="40" cy="18" r="4" fill={color} />
       <path
-        d="M40 8L42 13H48L43 16L45 21L40 18L35 21L37 16L32 13H38L40 8Z"
-        fill="#FFFFFF"
-        opacity="0.9"
-      />
-      <path
-        d="M24 16C18 12 12 14 12 14C12 14 14 20 20 22M56 16C62 12 68 14 68 14C68 14 66 20 60 22"
+        d="M40 6V14M35 22L40 18L45 22"
         stroke={color}
         strokeWidth="1.2"
         strokeLinecap="round"
+      />
+      {/* Paisley finial */}
+      <path
+        d="M26 36C26 36 32 30 40 30C48 30 54 36 54 36"
+        stroke={color}
+        strokeWidth="1"
+        strokeDasharray="2 2"
+        opacity="0.7"
       />
     </svg>
   </div>
 );
 
-export const WeddingRingsOrnament: React.FC<OrnamentProps> = ({ color = '#C59B27', className = '' }) => (
+export const CorporateSealBadge: React.FC<OrnamentProps> = ({ color = '#C5A059', className = '' }) => (
   <div className={`flex justify-center ${className}`}>
-    <svg width="48" height="32" viewBox="0 0 60 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="24" cy="20" r="14" stroke={color} strokeWidth="2.5" opacity="0.85" />
-      <circle cx="36" cy="20" r="14" stroke={color} strokeWidth="2.5" opacity="0.85" />
-      <path
-        d="M36 6L38 10L42 8L40 12L44 14L40 16L42 20L38 18L36 22L34 18L30 20L32 16L28 14L32 12L30 8L34 10L36 6Z"
-        fill={color}
-        opacity="0.3"
-      />
-      <circle cx="36" cy="6" r="3" fill={color} />
-    </svg>
+    <div
+      className="w-14 h-14 rounded-full border border-dashed flex items-center justify-center"
+      style={{ borderColor: color }}
+    >
+      <div
+        className="w-11 h-11 rounded-full border flex items-center justify-center text-[10px] font-bold tracking-widest uppercase font-mono"
+        style={{ borderColor: color, color }}
+      >
+        OFFICIAL
+      </div>
+    </div>
   </div>
 );
 
@@ -112,18 +124,18 @@ export const MonogramBadge: React.FC<{
   groomInitial: string;
   color?: string;
   className?: string;
-}> = ({ brideInitial, groomInitial, color = '#C59B27', className = '' }) => (
+}> = ({ brideInitial, groomInitial, color = '#D4AF37', className = '' }) => (
   <div className={`relative flex items-center justify-center ${className}`}>
     <div
-      className="w-16 h-16 sm:w-20 sm:h-20 rounded-full border-2 flex items-center justify-center backdrop-blur-sm transition-transform hover:scale-105 duration-300"
-      style={{ borderColor: color, backgroundColor: 'rgba(255,255,255,0.08)' }}
+      className="w-16 h-16 rounded-full border-2 flex items-center justify-center backdrop-blur-sm"
+      style={{ borderColor: color, backgroundColor: 'rgba(0,0,0,0.2)' }}
     >
       <div
-        className="w-14 h-14 sm:w-16 sm:h-16 rounded-full border border-dashed flex items-center justify-center font-heading text-lg sm:text-xl font-bold tracking-widest"
+        className="w-13 h-13 rounded-full border border-dashed flex items-center justify-center font-heading text-lg font-bold tracking-widest"
         style={{ borderColor: color, color }}
       >
         <span>{brideInitial}</span>
-        <span className="text-xs mx-0.5 opacity-70 font-script">&</span>
+        <span className="text-xs mx-0.5 opacity-80 font-script">&</span>
         <span>{groomInitial}</span>
       </div>
     </div>

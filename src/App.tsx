@@ -94,11 +94,11 @@ export function App() {
 
   if (loading || !activeInvitation) {
     return (
-      <div className="min-h-screen bg-[#faf8f5] flex items-center justify-center">
+      <div className="min-h-screen bg-[#FAF7F2] flex items-center justify-center">
         <div className="text-center space-y-3">
-          <div className="w-12 h-12 rounded-full border-2 border-amber-600 border-t-transparent animate-spin mx-auto" />
+          <div className="w-12 h-12 rounded-full border-3 border-[#350010] border-t-transparent animate-spin mx-auto" />
           <p className="font-heading font-semibold text-stone-700 text-sm tracking-wider">
-            Loading Dawat Wedding Suite...
+            Loading Dawat Invitation Platform...
           </p>
         </div>
       </div>
@@ -181,15 +181,15 @@ export function App() {
         <footer className="bg-stone-900 text-stone-400 py-12 px-4 sm:px-6 lg:px-8 border-t border-stone-800">
           <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="flex items-center space-x-2.5">
-              <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-amber-600 to-amber-400 flex items-center justify-center text-white">
-                <Heart className="w-4 h-4 fill-white" />
+              <div className="w-8 h-8 rounded-xl bg-[#350010] border border-[#D4AF37]/50 flex items-center justify-center text-[#D4AF37]">
+                <Heart className="w-4 h-4 fill-[#D4AF37]" />
               </div>
               <div>
                 <span className="font-heading font-bold text-white tracking-wider text-base">
                   DAWAT
                 </span>
                 <span className="block text-[10px] text-stone-500 uppercase tracking-widest">
-                  Modern Wedding Invitation Platform
+                  Modern Event & Wedding Invitation Platform
                 </span>
               </div>
             </div>
@@ -219,7 +219,7 @@ export function App() {
               <button
                 type="button"
                 onClick={() => navigate(`/invite/${activeInvitation.slug}`)}
-                className="text-amber-400 hover:text-amber-300 transition font-semibold"
+                className="text-[#D4AF37] hover:text-[#F3DF93] transition font-semibold"
               >
                 Guest View Demo
               </button>
