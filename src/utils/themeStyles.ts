@@ -78,14 +78,29 @@ export function getThemeComputedStyles(theme: ThemeConfiguration): ThemeComputed
 
     case 'luxury':
       return {
-        bgClass: 'bg-[#29050b] text-amber-50',
-        cardBgClass: 'bg-[#400812]/90 backdrop-blur-md border border-amber-400/40 shadow-2xl shadow-black/50',
+        bgClass: 'bg-[#20000a] text-amber-50',
+        cardBgClass: 'bg-[#350010] border-2 border-amber-400/60 shadow-[0_12px_40px_rgba(53,0,16,0.65)]',
         textColorClass: 'text-amber-100',
-        secondaryTextColorClass: 'text-amber-200/80',
-        mutedTextColorClass: 'text-amber-300/40',
+        secondaryTextColorClass: 'text-amber-200/90',
+        mutedTextColorClass: 'text-amber-300/50',
         accentTextColorClass: 'text-amber-300',
-        borderClass: 'border-2 border-amber-400/50 shadow-[0_0_15px_rgba(251,191,36,0.15)]',
+        borderClass: 'border-2 border-amber-400/60 shadow-[0_0_20px_rgba(251,191,36,0.2)]',
         badgeBgClass: 'bg-amber-400/15 text-amber-300 border border-amber-400/50',
+        ornamentColor: '#fbbf24',
+        fontHeadingClass: 'font-heading tracking-widest',
+        fontBodyClass: 'font-serif-elegant',
+      };
+
+    case 'sapphire':
+      return {
+        bgClass: 'bg-[#180860] text-indigo-50',
+        cardBgClass: 'bg-[#290EA0] border-2 border-amber-300/60 shadow-[0_12px_40px_rgba(41,14,160,0.65)]',
+        textColorClass: 'text-white',
+        secondaryTextColorClass: 'text-indigo-100/90',
+        mutedTextColorClass: 'text-indigo-200/60',
+        accentTextColorClass: 'text-amber-300',
+        borderClass: 'border-2 border-amber-300/70 shadow-[0_0_20px_rgba(251,191,36,0.25)]',
+        badgeBgClass: 'bg-amber-400/20 text-amber-300 border border-amber-400/50',
         ornamentColor: '#fbbf24',
         fontHeadingClass: 'font-heading tracking-widest',
         fontBodyClass: 'font-serif-elegant',

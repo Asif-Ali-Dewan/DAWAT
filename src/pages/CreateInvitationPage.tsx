@@ -519,6 +519,48 @@ export const CreateInvitationPage: React.FC<CreateInvitationPageProps> = ({
                     className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 bg-stone-50 text-sm focus:ring-2 focus:ring-amber-500 focus:outline-none"
                   />
                 </div>
+
+                {/* Card / Ticket Canvas Color */}
+                <div>
+                  <label className="block text-xs font-semibold text-stone-700 mb-2">
+                    Card & Ticket Luxury Canvas Color
+                  </label>
+                  <div className="grid grid-cols-2 gap-2">
+                    {[
+                      { name: 'Imperial Wine (#350010)', hex: '#350010', preset: 'luxury' as const },
+                      { name: 'Royal Sapphire (#290EA0)', hex: '#290EA0', preset: 'sapphire' as const },
+                      { name: 'Classic Royale (#FAF7F0)', hex: '#FAF7F0', preset: 'classic' as const },
+                      { name: 'Emerald Heritage (#064E3B)', hex: '#064E3B', preset: 'traditional' as const },
+                    ].map((opt) => (
+                      <button
+                        key={opt.hex}
+                        type="button"
+                        onClick={() => {
+                          const p = THEME_PRESETS[opt.preset];
+                          setFormData({
+                            ...formData,
+                            theme: {
+                              ...p.config,
+                              cardColor: opt.hex,
+                            },
+                          });
+                        }}
+                        className={`p-2.5 rounded-xl border text-xs font-semibold flex items-center space-x-2 transition ${
+                          formData.theme.cardColor?.toLowerCase() === opt.hex.toLowerCase() ||
+                          (!formData.theme.cardColor && formData.theme.preset === opt.preset)
+                            ? 'border-amber-600 bg-amber-50/60 ring-1 ring-amber-500'
+                            : 'border-stone-200 bg-white hover:bg-stone-50'
+                        }`}
+                      >
+                        <span
+                          className="w-4 h-4 rounded-full border border-black/20 shrink-0"
+                          style={{ backgroundColor: opt.hex }}
+                        />
+                        <span className="truncate">{opt.name}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
               </div>
             )}
 

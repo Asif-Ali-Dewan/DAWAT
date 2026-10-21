@@ -144,13 +144,124 @@ export const ThemeCustomizer: React.FC<ThemeCustomizerProps> = ({
           <span>Fine-Tune Design Tokens</span>
         </h3>
 
-        {/* 1. Accent Color */}
+        {/* 1. Card & Ticket Canvas Color */}
+        <div>
+          <label className="block text-xs font-semibold text-stone-700 mb-2 flex items-center justify-between">
+            <span className="flex items-center space-x-1.5">
+              <Layout className="w-3.5 h-3.5 text-stone-500" />
+              <span>Card & Ticket Canvas Color</span>
+            </span>
+            <span className="text-[11px] font-mono font-bold text-amber-700">
+              {currentTheme.cardColor || '#FAF7F0'}
+            </span>
+          </label>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            {[
+              {
+                name: 'Imperial Wine Velvet (#350010)',
+                hex: '#350010',
+                preset: 'luxury' as ThemePreset,
+                tag: 'RGB: 53, 0, 16',
+                textColor: '#FFFBEB',
+              },
+              {
+                name: 'Royal Sapphire Luxe (#290EA0)',
+                hex: '#290EA0',
+                preset: 'sapphire' as ThemePreset,
+                tag: 'RGB: 41, 14, 160',
+                textColor: '#EEF2FF',
+              },
+              {
+                name: 'Classic Ivory Silk (#FAF7F0)',
+                hex: '#FAF7F0',
+                preset: 'classic' as ThemePreset,
+                tag: 'Timeless Paper',
+                textColor: '#292524',
+              },
+              {
+                name: 'Royal Emerald Heritage (#064E3B)',
+                hex: '#064E3B',
+                preset: 'traditional' as ThemePreset,
+                tag: 'Deep Green',
+                textColor: '#FDFBF7',
+              },
+              {
+                name: 'Midnight Glamour (#0F172A)',
+                hex: '#0F172A',
+                preset: 'modern' as ThemePreset,
+                tag: 'Obsidian Noir',
+                textColor: '#F8FAFC',
+              },
+              {
+                name: 'Champagne Grace (#FFF9F5)',
+                hex: '#FFF9F5',
+                preset: 'elegant' as ThemePreset,
+                tag: 'Blush Silk',
+                textColor: '#431407',
+              },
+            ].map((option) => {
+              const isSelected =
+                currentTheme.cardColor?.toLowerCase() === option.hex.toLowerCase() ||
+                (!currentTheme.cardColor && currentTheme.preset === option.preset);
+              return (
+                <button
+                  key={option.hex}
+                  type="button"
+                  onClick={() => {
+                    onChange({
+                      ...currentTheme,
+                      preset: option.preset,
+                      cardColor: option.hex,
+                      accentColor: option.hex === '#350010' || option.hex === '#290EA0' ? '#FBBF24' : currentTheme.accentColor,
+                    });
+                  }}
+                  className={`flex items-center space-x-3 p-2.5 rounded-2xl border text-left transition ${
+                    isSelected
+                      ? 'border-amber-600 ring-2 ring-amber-400/40 bg-amber-50/30 font-bold'
+                      : 'border-stone-200 hover:border-stone-300 bg-white'
+                  }`}
+                >
+                  <span
+                    className="w-8 h-8 rounded-xl border border-black/20 shrink-0 shadow-sm flex items-center justify-center font-bold text-[10px]"
+                    style={{ backgroundColor: option.hex, color: option.textColor }}
+                  >
+                    Aa
+                  </span>
+                  <div className="min-w-0 flex-1">
+                    <span className="block text-xs text-stone-900 truncate">
+                      {option.name}
+                    </span>
+                    <span className="text-[10px] text-stone-400 font-mono">
+                      {option.tag}
+                    </span>
+                  </div>
+                  {isSelected && (
+                    <span className="w-5 h-5 rounded-full bg-amber-600 text-white flex items-center justify-center shrink-0">
+                      <Check className="w-3 h-3 stroke-[3]" />
+                    </span>
+                  )}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* 2. Accent & Foil Color */}
         <div>
           <label className="block text-xs font-semibold text-stone-700 mb-2">
-            Accent & Foil Color
+            Foil Stamping & Highlight Color
           </label>
           <div className="flex flex-wrap items-center gap-2.5">
-            {colorPalettes.map((c) => (
+            {[
+              { name: 'Imperial Gold', hex: '#FBBF24' },
+              { name: 'Classic Royale Gold', hex: '#C59B27' },
+              { name: 'Warm Amber', hex: '#D97706' },
+              { name: 'Wine Accent (#350010)', hex: '#350010' },
+              { name: 'Sapphire Accent (#290EA0)', hex: '#290EA0' },
+              { name: 'Rose Gold', hex: '#BE185D' },
+              { name: 'Royal Emerald', hex: '#047857' },
+              { name: 'Charcoal Noir', hex: '#1C1917' },
+            ].map((c) => (
               <button
                 key={c.hex}
                 type="button"

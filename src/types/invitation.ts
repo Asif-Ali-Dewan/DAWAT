@@ -24,18 +24,19 @@ export interface ReceiverInfo {
   contactPhone?: string;
 }
 
-export type ThemePreset = 'classic' | 'minimal' | 'elegant' | 'traditional' | 'modern' | 'luxury';
+export type ThemePreset = 'classic' | 'minimal' | 'elegant' | 'traditional' | 'modern' | 'luxury' | 'sapphire';
 
 export interface ThemeConfiguration {
   preset: ThemePreset;
   accentColor: string; // Hex color
+  cardColor?: string; // Optional custom card/ticket hex color (e.g. #350010, #290EA0)
   fontHeading: string; // 'Cinzel' | 'Playfair Display' | 'Cormorant' | 'Alex Brush'
   fontBody: string;
   borderStyle: 'double-gold' | 'minimal-thin' | 'floral-corners' | 'ornate' | 'clean';
   cardLayout: 'story' | 'split' | 'compact' | 'royal-scroll';
   decorativeElement: 'botanical' | 'monogram' | 'floral' | 'rings' | 'none';
   textAlignment: 'center' | 'left' | 'balanced';
-  backgroundStyle: 'ivory-silk' | 'midnight-gold' | 'emerald-luxe' | 'rose-champagne' | 'sand-stone' | 'burgundy-velvet';
+  backgroundStyle: 'ivory-silk' | 'midnight-gold' | 'emerald-luxe' | 'rose-champagne' | 'sand-stone' | 'burgundy-velvet' | 'sapphire-royal';
 }
 
 export interface Invitation {

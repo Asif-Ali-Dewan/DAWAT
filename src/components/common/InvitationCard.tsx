@@ -94,6 +94,26 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({
     }
   };
 
+  const isDarkCard =
+    theme.preset === 'luxury' ||
+    theme.preset === 'sapphire' ||
+    theme.preset === 'traditional' ||
+    theme.preset === 'modern' ||
+    theme.cardColor === '#350010' ||
+    theme.cardColor === '#290EA0';
+
+  const cardCustomBg = theme.cardColor
+    ? { backgroundColor: theme.cardColor }
+    : undefined;
+
+  const innerBoxClass = isDarkCard
+    ? 'bg-white/[0.07] border border-amber-300/30 shadow-inner'
+    : 'bg-black/[0.02] border border-black/[0.06] dark:bg-white/[0.03] dark:border-white/[0.08]';
+
+  const countdownBoxClass = isDarkCard
+    ? 'bg-black/50 border border-amber-400/40 shadow-inner'
+    : 'bg-white/80 dark:bg-stone-900/80 border border-black/5 dark:border-white/10 shadow-sm';
+
   return (
     <div
       className={`relative w-full transition-all duration-300 ${
@@ -102,6 +122,7 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({
     >
       <div
         id="wedding-invitation-card"
+        style={cardCustomBg}
         className={`relative overflow-hidden rounded-2xl md:rounded-3xl p-6 sm:p-10 md:p-14 ${styles.cardBgClass} ${styles.borderClass}`}
       >
         {/* Ornate Corner Accents */}
@@ -116,7 +137,7 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({
 
         {/* Header Ribbon / Status badge */}
         <div className="flex flex-col items-center text-center mb-6">
-          <div className="inline-flex items-center space-x-2 px-4 py-1 rounded-full text-xs font-medium uppercase tracking-widest mb-4 bg-amber-500/10 text-amber-700 border border-amber-500/20">
+          <div className={`inline-flex items-center space-x-2 px-4 py-1 rounded-full text-xs font-medium uppercase tracking-widest mb-4 ${styles.badgeBgClass}`}>
             <Sparkles className="w-3.5 h-3.5" />
             <span>Solemn Wedding Invitation</span>
           </div>
@@ -149,7 +170,7 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({
             </h1>
             <div className="flex items-center justify-center space-x-3 py-1">
               <span className="h-[1px] w-8 sm:w-16 bg-current opacity-30" />
-              <span className="font-script text-2xl sm:text-4xl text-amber-600 italic px-2">and</span>
+              <span className="font-script text-2xl sm:text-4xl text-amber-400 italic px-2">and</span>
               <span className="h-[1px] w-8 sm:w-16 bg-current opacity-30" />
             </div>
             <h1
@@ -168,8 +189,8 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({
 
         {/* Date, Time & Countdown Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 my-6">
-          <div className="flex items-center p-4 rounded-xl bg-black/[0.02] border border-black/[0.06] dark:bg-white/[0.03] dark:border-white/[0.08]">
-            <div className="w-10 h-10 rounded-full flex items-center justify-center bg-amber-500/10 text-amber-600 shrink-0 mr-3">
+          <div className={`flex items-center p-4 rounded-xl ${innerBoxClass}`}>
+            <div className="w-10 h-10 rounded-full flex items-center justify-center bg-amber-500/15 text-amber-400 shrink-0 mr-3 border border-amber-400/30">
               <Calendar className="w-5 h-5" />
             </div>
             <div>
@@ -180,8 +201,8 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({
             </div>
           </div>
 
-          <div className="flex items-center p-4 rounded-xl bg-black/[0.02] border border-black/[0.06] dark:bg-white/[0.03] dark:border-white/[0.08]">
-            <div className="w-10 h-10 rounded-full flex items-center justify-center bg-amber-500/10 text-amber-600 shrink-0 mr-3">
+          <div className={`flex items-center p-4 rounded-xl ${innerBoxClass}`}>
+            <div className="w-10 h-10 rounded-full flex items-center justify-center bg-amber-500/15 text-amber-400 shrink-0 mr-3 border border-amber-400/30">
               <Clock className="w-5 h-5" />
             </div>
             <div>
@@ -198,41 +219,41 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({
 
         {/* Countdown Timer */}
         {!countdown.isPast && (
-          <div className="my-6 p-4 rounded-2xl bg-gradient-to-r from-amber-500/5 via-amber-500/10 to-amber-500/5 border border-amber-500/20 text-center">
-            <p className="text-[11px] uppercase tracking-widest text-amber-700 dark:text-amber-300 font-semibold mb-2">
+          <div className={`my-6 p-4 rounded-2xl text-center ${isDarkCard ? 'bg-black/30 border border-amber-400/30' : 'bg-gradient-to-r from-amber-500/5 via-amber-500/10 to-amber-500/5 border border-amber-500/20'}`}>
+            <p className="text-[11px] uppercase tracking-widest text-amber-300 font-semibold mb-2">
               Counting Down To The Joyous Day
             </p>
             <div className="grid grid-cols-4 gap-2 max-w-xs mx-auto">
-              <div className="bg-white/80 dark:bg-stone-900/80 rounded-xl p-2 shadow-sm border border-black/5 dark:border-white/10">
-                <span className="block text-lg sm:text-2xl font-bold font-heading text-amber-700 dark:text-amber-400">
+              <div className={`rounded-xl p-2 ${countdownBoxClass}`}>
+                <span className="block text-lg sm:text-2xl font-bold font-heading text-amber-300">
                   {countdown.days}
                 </span>
-                <span className="text-[10px] uppercase tracking-wider opacity-60">Days</span>
+                <span className="text-[10px] uppercase tracking-wider opacity-75">Days</span>
               </div>
-              <div className="bg-white/80 dark:bg-stone-900/80 rounded-xl p-2 shadow-sm border border-black/5 dark:border-white/10">
-                <span className="block text-lg sm:text-2xl font-bold font-heading text-amber-700 dark:text-amber-400">
+              <div className={`rounded-xl p-2 ${countdownBoxClass}`}>
+                <span className="block text-lg sm:text-2xl font-bold font-heading text-amber-300">
                   {countdown.hours}
                 </span>
-                <span className="text-[10px] uppercase tracking-wider opacity-60">Hours</span>
+                <span className="text-[10px] uppercase tracking-wider opacity-75">Hours</span>
               </div>
-              <div className="bg-white/80 dark:bg-stone-900/80 rounded-xl p-2 shadow-sm border border-black/5 dark:border-white/10">
-                <span className="block text-lg sm:text-2xl font-bold font-heading text-amber-700 dark:text-amber-400">
+              <div className={`rounded-xl p-2 ${countdownBoxClass}`}>
+                <span className="block text-lg sm:text-2xl font-bold font-heading text-amber-300">
                   {countdown.minutes}
                 </span>
-                <span className="text-[10px] uppercase tracking-wider opacity-60">Mins</span>
+                <span className="text-[10px] uppercase tracking-wider opacity-75">Mins</span>
               </div>
-              <div className="bg-white/80 dark:bg-stone-900/80 rounded-xl p-2 shadow-sm border border-black/5 dark:border-white/10">
-                <span className="block text-lg sm:text-2xl font-bold font-heading text-amber-700 dark:text-amber-400">
+              <div className={`rounded-xl p-2 ${countdownBoxClass}`}>
+                <span className="block text-lg sm:text-2xl font-bold font-heading text-amber-300">
                   {countdown.seconds}
                 </span>
-                <span className="text-[10px] uppercase tracking-wider opacity-60">Secs</span>
+                <span className="text-[10px] uppercase tracking-wider opacity-75">Secs</span>
               </div>
             </div>
           </div>
         )}
 
         {/* Venue Section */}
-        <div className="my-6 p-5 sm:p-6 rounded-2xl bg-black/[0.02] border border-black/[0.06] dark:bg-white/[0.03] dark:border-white/[0.08]">
+        <div className={`my-6 p-5 sm:p-6 rounded-2xl ${innerBoxClass}`}>
           <div className="flex items-start justify-between flex-wrap gap-4">
             <div className="space-y-1 max-w-md">
               <div className="flex items-center space-x-2 text-amber-600 font-semibold text-xs tracking-wider uppercase">
@@ -269,12 +290,18 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({
 
         {/* Guest Reception Information */}
         {receiver.receiverName && (
-          <div className="my-6 p-4 sm:p-5 rounded-2xl bg-amber-50/50 dark:bg-amber-950/20 border border-amber-200/50 dark:border-amber-900/50 flex items-center space-x-4">
-            <div className="w-12 h-12 rounded-full bg-amber-100 dark:bg-amber-900/50 text-amber-700 dark:text-amber-300 flex items-center justify-center shrink-0">
+          <div
+            className={`my-6 p-4 sm:p-5 rounded-2xl flex items-center space-x-4 ${
+              isDarkCard
+                ? 'bg-white/[0.08] border border-amber-300/30'
+                : 'bg-amber-50/50 dark:bg-amber-950/20 border border-amber-200/50 dark:border-amber-900/50'
+            }`}
+          >
+            <div className="w-12 h-12 rounded-full bg-amber-500/20 text-amber-300 border border-amber-400/40 flex items-center justify-center shrink-0">
               <Users className="w-6 h-6" />
             </div>
             <div>
-              <p className="text-[11px] uppercase tracking-wider font-semibold text-amber-800 dark:text-amber-300">
+              <p className="text-[11px] uppercase tracking-wider font-semibold text-amber-400">
                 Warm Reception By
               </p>
               <h4 className={`text-base font-bold ${styles.textColorClass}`}>
@@ -296,11 +323,19 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({
 
         {/* Special Note (Conditional) */}
         {specialNote && specialNote.trim().length > 0 && (
-          <div className="my-6 p-6 rounded-2xl bg-gradient-to-r from-amber-500/5 via-amber-500/10 to-amber-500/5 border border-amber-400/20 text-center">
-            <p className="text-[11px] uppercase tracking-widest text-amber-600 dark:text-amber-400 font-semibold mb-2">
+          <div
+            className={`my-6 p-6 rounded-2xl text-center ${
+              isDarkCard
+                ? 'bg-black/40 border border-amber-400/35'
+                : 'bg-gradient-to-r from-amber-500/5 via-amber-500/10 to-amber-500/5 border border-amber-400/20'
+            }`}
+          >
+            <p className="text-[11px] uppercase tracking-widest text-amber-400 font-semibold mb-2">
               A Personal Note From The Couple
             </p>
-            <blockquote className={`italic text-sm sm:text-base font-serif-elegant max-w-xl mx-auto leading-relaxed ${styles.secondaryTextColorClass}`}>
+            <blockquote
+              className={`italic text-sm sm:text-base font-serif-elegant max-w-xl mx-auto leading-relaxed ${styles.secondaryTextColorClass}`}
+            >
               &ldquo;{specialNote}&rdquo;
             </blockquote>
           </div>
@@ -322,16 +357,22 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({
               {schedule.map((item, index) => (
                 <div key={item.id || index} className="relative group">
                   {/* Timeline dot */}
-                  <div className="absolute -left-[31px] sm:-left-[39px] top-1 w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-white dark:bg-stone-900 border-2 border-amber-500 flex items-center justify-center shadow-sm">
+                  <div className="absolute -left-[31px] sm:-left-[39px] top-1 w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-stone-900 border-2 border-amber-400 flex items-center justify-center shadow-sm">
                     {renderScheduleIcon(item.iconName)}
                   </div>
 
-                  <div className="p-3.5 sm:p-4 rounded-xl bg-black/[0.02] border border-black/[0.05] dark:bg-white/[0.03] dark:border-white/[0.06] hover:border-amber-400/40 transition-colors">
+                  <div
+                    className={`p-3.5 sm:p-4 rounded-xl transition-colors ${
+                      isDarkCard
+                        ? 'bg-white/[0.07] border border-amber-300/20 hover:border-amber-400/50'
+                        : 'bg-black/[0.02] border border-black/[0.05] dark:bg-white/[0.03] dark:border-white/[0.06] hover:border-amber-400/40'
+                    }`}
+                  >
                     <div className="flex items-center justify-between flex-wrap gap-1">
                       <h4 className={`font-semibold text-sm sm:text-base ${styles.textColorClass}`}>
                         {item.title}
                       </h4>
-                      <span className="text-xs font-mono font-medium text-amber-600 dark:text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-md">
+                      <span className="text-xs font-mono font-medium text-amber-400 bg-amber-500/15 border border-amber-400/30 px-2 py-0.5 rounded-md">
                         {item.startTime} {item.endTime ? `— ${item.endTime}` : ''}
                       </span>
                     </div>
@@ -348,7 +389,13 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({
         )}
 
         {/* Wedding Photos QR Section */}
-        <div className="my-8 p-6 rounded-2xl bg-gradient-to-br from-amber-500/10 via-amber-500/5 to-transparent border border-amber-400/30">
+        <div
+          className={`my-8 p-6 rounded-2xl ${
+            isDarkCard
+              ? 'bg-black/35 border border-amber-400/30 shadow-inner'
+              : 'bg-gradient-to-br from-amber-500/10 via-amber-500/5 to-transparent border border-amber-400/30'
+          }`}
+        >
           <div className="flex flex-col sm:flex-row items-center gap-6 text-center sm:text-left">
             {qrCodeDataUrl ? (
               <div className="relative p-2.5 bg-white rounded-2xl shadow-lg border border-amber-200/80 shrink-0">
@@ -368,7 +415,7 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({
             )}
 
             <div className="space-y-2 flex-1">
-              <div className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full text-[11px] font-medium bg-amber-500/15 text-amber-800 dark:text-amber-300">
+              <div className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full text-[11px] font-medium bg-amber-500/15 text-amber-300 border border-amber-400/30">
                 <Camera className="w-3.5 h-3.5" />
                 <span>Wedding Memories Portal</span>
               </div>
@@ -383,7 +430,7 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({
                 <button
                   type="button"
                   onClick={onNavigateToPhotos}
-                  className="inline-flex items-center space-x-2 mt-2 px-4 py-2 rounded-xl text-xs font-semibold bg-stone-900 hover:bg-stone-800 text-white dark:bg-amber-400 dark:text-stone-950 dark:hover:bg-amber-300 shadow transition-all hover:scale-105 active:scale-95"
+                  className="inline-flex items-center space-x-2 mt-2 px-4 py-2 rounded-xl text-xs font-semibold bg-amber-400 hover:bg-amber-300 text-stone-950 shadow-md transition-all hover:scale-105 active:scale-95"
                 >
                   <Camera className="w-3.5 h-3.5" />
                   <span>View Photo Gallery</span>
@@ -401,18 +448,26 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({
               href={createGoogleCalendarUrl(invitation)}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center space-x-2 px-4 py-2.5 rounded-xl text-xs font-medium bg-white dark:bg-stone-800 border border-stone-300 dark:border-stone-700 text-stone-700 dark:text-stone-200 hover:bg-stone-50 dark:hover:bg-stone-700 shadow-sm transition"
+              className={`inline-flex items-center space-x-2 px-4 py-2.5 rounded-xl text-xs font-medium border shadow-sm transition ${
+                isDarkCard
+                  ? 'bg-black/40 border-amber-400/40 text-amber-200 hover:bg-black/60'
+                  : 'bg-white dark:bg-stone-800 border-stone-300 dark:border-stone-700 text-stone-700 dark:text-stone-200 hover:bg-stone-50'
+              }`}
             >
-              <CalendarPlus className="w-4 h-4 text-amber-600" />
+              <CalendarPlus className="w-4 h-4 text-amber-400" />
               <span>Add to Google Calendar</span>
             </a>
 
             <button
               type="button"
               onClick={() => downloadIcsFile(invitation)}
-              className="inline-flex items-center space-x-2 px-4 py-2.5 rounded-xl text-xs font-medium bg-white dark:bg-stone-800 border border-stone-300 dark:border-stone-700 text-stone-700 dark:text-stone-200 hover:bg-stone-50 dark:hover:bg-stone-700 shadow-sm transition"
+              className={`inline-flex items-center space-x-2 px-4 py-2.5 rounded-xl text-xs font-medium border shadow-sm transition ${
+                isDarkCard
+                  ? 'bg-black/40 border-amber-400/40 text-amber-200 hover:bg-black/60'
+                  : 'bg-white dark:bg-stone-800 border-stone-300 dark:border-stone-700 text-stone-700 dark:text-stone-200 hover:bg-stone-50'
+              }`}
             >
-              <Calendar className="w-4 h-4 text-amber-600" />
+              <Calendar className="w-4 h-4 text-amber-400" />
               <span>Download iCal (.ics)</span>
             </button>
 
