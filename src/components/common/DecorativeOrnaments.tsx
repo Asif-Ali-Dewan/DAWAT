@@ -5,16 +5,16 @@ interface OrnamentProps {
   className?: string;
 }
 
-export const GoldDivider: React.FC<OrnamentProps> = ({ color = '#D4AF37', className = 'my-5' }) => (
+export const GoldDivider: React.FC<OrnamentProps> = ({ color = '#D4AF37', className = 'my-4' }) => (
   <div className={`flex items-center justify-center space-x-3 opacity-90 ${className}`}>
-    <div className="h-[1px] w-12 sm:w-20 bg-gradient-to-r from-transparent to-current" style={{ color }} />
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="shrink-0">
+    <div className="h-[1px] w-10 sm:w-16 bg-current" style={{ color }} />
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="shrink-0">
       <path
         d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z"
         fill={color}
       />
     </svg>
-    <div className="h-[1px] w-12 sm:w-20 bg-gradient-to-l from-transparent to-current" style={{ color }} />
+    <div className="h-[1px] w-10 sm:w-16 bg-current" style={{ color }} />
   </div>
 );
 
@@ -50,10 +50,10 @@ export const TraditionalCornerFlourish: React.FC<{ position: 'tl' | 'tr' | 'bl' 
 
   return (
     <div
-      className={`absolute ${getPositionClass()} pointer-events-none opacity-85 transition-opacity duration-300`}
+      className={`absolute ${getPositionClass()} pointer-events-none opacity-75 transition-opacity duration-300`}
       style={{ transform: getTransform() }}
     >
-      <svg width="40" height="40" viewBox="0 0 48 48" fill="none">
+      <svg width="32" height="32" viewBox="0 0 48 48" fill="none">
         <path
           d="M3 3H24C24 14.598 14.598 24 3 24V3Z"
           stroke={color}
@@ -61,13 +61,12 @@ export const TraditionalCornerFlourish: React.FC<{ position: 'tl' | 'tr' | 'bl' 
           fill="none"
         />
         <path
-          d="M3 3V42M3 3H42"
+          d="M3 3V36M3 3H36"
           stroke={color}
-          strokeWidth="1.5"
+          strokeWidth="1.2"
           strokeLinecap="round"
         />
-        <circle cx="8" cy="8" r="2.5" fill={color} />
-        <path d="M12 4C18 10 20 18 20 28" stroke={color} strokeWidth="1" strokeLinecap="round" opacity="0.6" />
+        <circle cx="7" cy="7" r="2" fill={color} />
       </svg>
     </div>
   );
@@ -75,29 +74,20 @@ export const TraditionalCornerFlourish: React.FC<{ position: 'tl' | 'tr' | 'bl' 
 
 export const DesiWeddingArch: React.FC<OrnamentProps> = ({ color = '#D4AF37', className = '' }) => (
   <div className={`flex flex-col items-center justify-center ${className}`}>
-    <svg width="70" height="45" viewBox="0 0 80 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-      {/* Traditional Mehrab Arch */}
+    <svg width="60" height="36" viewBox="0 0 80 50" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
         d="M40 4C30 4 20 12 14 26C10 34 10 46 10 46H70C70 46 70 34 66 26C60 12 50 4 40 4Z"
         stroke={color}
-        strokeWidth="1.5"
+        strokeWidth="1.2"
         fill="none"
-        opacity="0.85"
+        opacity="0.8"
       />
-      <circle cx="40" cy="18" r="4" fill={color} />
+      <circle cx="40" cy="18" r="3" fill={color} />
       <path
         d="M40 6V14M35 22L40 18L45 22"
         stroke={color}
-        strokeWidth="1.2"
-        strokeLinecap="round"
-      />
-      {/* Paisley finial */}
-      <path
-        d="M26 36C26 36 32 30 40 30C48 30 54 36 54 36"
-        stroke={color}
         strokeWidth="1"
-        strokeDasharray="2 2"
-        opacity="0.7"
+        strokeLinecap="round"
       />
     </svg>
   </div>
@@ -106,11 +96,11 @@ export const DesiWeddingArch: React.FC<OrnamentProps> = ({ color = '#D4AF37', cl
 export const CorporateSealBadge: React.FC<OrnamentProps> = ({ color = '#C5A059', className = '' }) => (
   <div className={`flex justify-center ${className}`}>
     <div
-      className="w-14 h-14 rounded-full border border-dashed flex items-center justify-center"
+      className="w-12 h-12 rounded-full border border-dashed flex items-center justify-center"
       style={{ borderColor: color }}
     >
       <div
-        className="w-11 h-11 rounded-full border flex items-center justify-center text-[10px] font-bold tracking-widest uppercase font-mono"
+        className="w-9 h-9 rounded-full border flex items-center justify-center text-[9px] font-bold tracking-widest uppercase font-mono"
         style={{ borderColor: color, color }}
       >
         OFFICIAL
@@ -127,17 +117,63 @@ export const MonogramBadge: React.FC<{
 }> = ({ brideInitial, groomInitial, color = '#D4AF37', className = '' }) => (
   <div className={`relative flex items-center justify-center ${className}`}>
     <div
-      className="w-16 h-16 rounded-full border-2 flex items-center justify-center backdrop-blur-sm"
+      className="w-12 h-12 rounded-full border flex items-center justify-center backdrop-blur-sm"
       style={{ borderColor: color, backgroundColor: 'rgba(0,0,0,0.2)' }}
     >
       <div
-        className="w-13 h-13 rounded-full border border-dashed flex items-center justify-center font-heading text-lg font-bold tracking-widest"
+        className="w-9 h-9 rounded-full border border-dashed flex items-center justify-center font-heading text-sm font-bold tracking-wider"
         style={{ borderColor: color, color }}
       >
         <span>{brideInitial}</span>
-        <span className="text-xs mx-0.5 opacity-80 font-script">&</span>
+        <span className="text-[10px] mx-0.5 opacity-80 font-script">&</span>
         <span>{groomInitial}</span>
       </div>
+    </div>
+  </div>
+);
+
+export const BarcodeGraphic: React.FC<{ serial?: string; color?: string; className?: string }> = ({
+  serial = 'DAW-2026-8849-01',
+  color = '#D4AF37',
+  className = '',
+}) => {
+  const bars = [2, 1, 3, 1, 2, 4, 1, 2, 1, 3, 2, 1, 4, 1, 2, 3, 1, 2, 1, 4, 2, 1, 3, 1, 2, 1, 4, 2, 1, 3, 2, 1, 4, 1, 2];
+
+  return (
+    <div className={`flex flex-col items-center justify-center ${className}`}>
+      <div className="flex items-end justify-center h-7 space-x-[2px] opacity-90">
+        {bars.map((width, idx) => (
+          <div
+            key={idx}
+            className="h-full rounded-[0.5px]"
+            style={{
+              width: `${width * 1.3}px`,
+              backgroundColor: color,
+            }}
+          />
+        ))}
+      </div>
+      <span
+        className="text-[9px] font-mono tracking-widest uppercase mt-1 opacity-80"
+        style={{ color }}
+      >
+        {serial}
+      </span>
+    </div>
+  );
+};
+
+export const AdmitOneStamp: React.FC<{ color?: string; text?: string; className?: string }> = ({
+  color = '#D4AF37',
+  text = 'ADMIT ONE',
+  className = '',
+}) => (
+  <div className={`flex items-center justify-center ${className}`}>
+    <div
+      className="px-3 py-1 rounded-full border-2 border-dashed flex items-center justify-center text-[10px] font-mono font-bold tracking-widest uppercase"
+      style={{ borderColor: color, color }}
+    >
+      {text}
     </div>
   </div>
 );

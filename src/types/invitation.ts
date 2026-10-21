@@ -47,7 +47,7 @@ export interface ThemeConfiguration {
   fontBody: string;
   borderStyle: 'traditional-arch' | 'ornate-gold' | 'corporate-geometric' | 'clean-borderless';
   decorativeElement: 'paisley-arch' | 'monogram' | 'corporate-seal' | 'none';
-  hasStarTexture: boolean; // Subtle stardust / night sky grain
+  hasStarTexture?: boolean;
 }
 
 export interface Invitation {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { ThemeConfiguration, ThemePreset, CardVariant } from '../../types/invitation';
 import { THEME_PRESETS, ThemePresetDefinition } from '../../config/themes';
-import { Palette, Sparkles, Layout, Type, Shield, Check, Star } from 'lucide-react';
+import { Palette, Sparkles, Layout, Type, Shield, Check } from 'lucide-react';
 
 interface ThemeCustomizerProps {
   currentTheme: ThemeConfiguration;
@@ -241,33 +241,7 @@ export const ThemeCustomizer: React.FC<ThemeCustomizerProps> = ({
           </div>
         </div>
 
-        {/* 3. Stardust / Celestial Grain Texture Toggle */}
-        <div className="p-4 rounded-2xl border border-stone-200 bg-stone-50 flex items-center justify-between">
-          <div className="flex items-center space-x-3">
-            <div className="w-9 h-9 rounded-xl bg-[#350010] text-[#D4AF37] flex items-center justify-center border border-[#D4AF37]/30">
-              <Star className="w-4 h-4 fill-[#D4AF37]" />
-            </div>
-            <div>
-              <p className="text-xs font-bold text-stone-900">Celestial Stardust Grain Texture</p>
-              <p className="text-[11px] text-stone-500">
-                Adds a subtle, elegant starry night grain across the solid card canvas
-              </p>
-            </div>
-          </div>
-          <button
-            type="button"
-            onClick={() => handleUpdate('hasStarTexture', !currentTheme.hasStarTexture)}
-            className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition border ${
-              currentTheme.hasStarTexture
-                ? 'bg-[#350010] text-[#D4AF37] border-[#D4AF37]/40'
-                : 'bg-white text-stone-600 border-stone-300 hover:bg-stone-100'
-            }`}
-          >
-            {currentTheme.hasStarTexture ? 'Enabled (Active)' : 'Disabled'}
-          </button>
-        </div>
-
-        {/* 4. Accent & Foil Color */}
+        {/* 3. Accent & Foil Color */}
         <div>
           <label className="block text-xs font-semibold text-stone-700 mb-2">
             Foil Stamping & Highlight Contrast Color

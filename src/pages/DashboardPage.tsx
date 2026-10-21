@@ -300,7 +300,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                 </div>
                 <h3 className="font-bold text-base text-stone-900">Customize Theme & Canvas</h3>
                 <p className="text-xs text-stone-500 leading-relaxed">
-                  Switch between Traditional Desi Royal, Corporate Executive, and Sapphire variants with stardust texture.
+                  Switch between Traditional Desi Royal, Corporate Executive, and Sapphire ticket passes with authentic tear stubs.
                 </p>
               </div>
 

@@ -637,7 +637,7 @@ export const CreateInvitationPage: React.FC<CreateInvitationPageProps> = ({
                     Choose Your Luxury Card Aesthetic
                   </h2>
                   <p className="text-xs text-stone-500">
-                    Select one of our 4 dedicated card aesthetics with solid tones and stardust grain.
+                    Select one of our 4 dedicated ticket aesthetics with clean solid colors and perforated stubs.
                   </p>
                 </div>
 

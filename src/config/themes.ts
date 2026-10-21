@@ -15,7 +15,7 @@ export const THEME_PRESETS: Record<ThemePreset, ThemePresetDefinition> = {
     id: 'traditional-burgundy',
     name: 'Traditional Royal Burgundy',
     subtitle: 'Bangladeshi & Pakistani Wedding Vibe',
-    description: 'Deep imperial wine velvet (#350010) with stardust gold grain, traditional mehrab arch, and authentic wedding greetings.',
+    description: 'Deep imperial wine velvet (#350010) with clean solid contrast, traditional mehrab arch, and authentic wedding greetings.',
     cardColor: '#350010',
     accentColor: '#D4AF37',
     config: {
@@ -27,14 +27,14 @@ export const THEME_PRESETS: Record<ThemePreset, ThemePresetDefinition> = {
       fontBody: 'Cormorant Garamond',
       borderStyle: 'traditional-arch',
       decorativeElement: 'paisley-arch',
-      hasStarTexture: true,
+      hasStarTexture: false,
     },
   },
   'royal-sapphire': {
     id: 'royal-sapphire',
     name: 'Royal Sapphire Luxe',
     subtitle: 'Majestic Walima & Imperial Evening',
-    description: 'Dazzling solid deep royal sapphire (#290EA0) with delicate gold foil filigree and starry celestial grain.',
+    description: 'Dazzling solid deep royal sapphire (#290EA0) with delicate gold foil filigree and clean admission stub.',
     cardColor: '#290EA0',
     accentColor: '#D4AF37',
     config: {
@@ -46,7 +46,7 @@ export const THEME_PRESETS: Record<ThemePreset, ThemePresetDefinition> = {
       fontBody: 'Cormorant Garamond',
       borderStyle: 'ornate-gold',
       decorativeElement: 'monogram',
-      hasStarTexture: true,
+      hasStarTexture: false,
     },
   },
   'corporate-noir': {

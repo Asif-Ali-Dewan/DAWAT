@@ -227,7 +227,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             Preview The 4 Dedicated Card Aesthetics
           </h2>
           <p className="text-xs sm:text-sm text-stone-500">
-            Solid rich backgrounds, celestial stardust texture, and authentic typography.
+            Clean solid backgrounds, authentic perforated ticket stubs, and elegant typography.
           </p>
 
           {/* Variant Switcher Pills */}
