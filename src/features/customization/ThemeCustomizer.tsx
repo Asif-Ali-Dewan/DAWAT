@@ -21,6 +21,46 @@ export const ThemeCustomizer: React.FC<ThemeCustomizerProps> = ({
     }
   };
 
+  const handleCardVariantSelect = (variantValue: CardVariant) => {
+    if (variantValue === 'corporate-executive') {
+      onChange({
+        ...currentTheme,
+        cardVariant: 'corporate-executive',
+        borderStyle: 'corporate-geometric',
+        decorativeElement: 'corporate-seal',
+        fontHeading: 'Plus Jakarta Sans',
+        fontBody: 'Plus Jakarta Sans',
+      });
+    } else if (variantValue === 'royal-sapphire') {
+      onChange({
+        ...currentTheme,
+        cardVariant: 'royal-sapphire',
+        borderStyle: 'ornate-gold',
+        decorativeElement: 'monogram',
+        fontHeading: 'Cinzel',
+        fontBody: 'Cormorant Garamond',
+      });
+    } else if (variantValue === 'minimal-ivory') {
+      onChange({
+        ...currentTheme,
+        cardVariant: 'minimal-ivory',
+        borderStyle: 'clean-borderless',
+        decorativeElement: 'none',
+        fontHeading: 'Playfair Display',
+        fontBody: 'Plus Jakarta Sans',
+      });
+    } else {
+      onChange({
+        ...currentTheme,
+        cardVariant: 'traditional-desi',
+        borderStyle: 'traditional-arch',
+        decorativeElement: 'paisley-arch',
+        fontHeading: 'Cinzel',
+        fontBody: 'Cormorant Garamond',
+      });
+    }
+  };
+
   const handleUpdate = <K extends keyof ThemeConfiguration>(
     key: K,
     value: ThemeConfiguration[K]
@@ -171,7 +211,7 @@ export const ThemeCustomizer: React.FC<ThemeCustomizerProps> = ({
                 <button
                   key={variant.value}
                   type="button"
-                  onClick={() => handleUpdate('cardVariant', variant.value)}
+                  onClick={() => handleCardVariantSelect(variant.value)}
                   className={`p-3 rounded-2xl border text-left transition ${
                     isSelected
                       ? 'border-[#350010] bg-stone-50 font-bold ring-1 ring-[#350010]'
