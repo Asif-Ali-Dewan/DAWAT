@@ -6,6 +6,8 @@ import { createGoogleCalendarUrl } from '../../utils/calendar';
 import {
   BarcodeGraphic,
   CircularTicketStamp,
+  RoyalMandalaWatermark,
+  GildedCornerSet,
 } from './DecorativeOrnaments';
 import {
   MapPin,
@@ -180,20 +182,32 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({
         style={{ backgroundColor: palette.cardBg, borderColor: palette.borderRule }}
         className="relative rounded-2xl border flex flex-col justify-between overflow-hidden min-h-[640px]"
       >
+        {/* Luxury Tactile White Grain Texture on Dark Cardstock */}
+        {palette.isDark && <div className="dark-card-grain" />}
+
+        {/* Delicate Inner Gilded Frame & Corner Filigree */}
+        <div className="absolute inset-1.5 border border-dashed rounded-xl pointer-events-none opacity-25" style={{ borderColor: palette.accentGold }} />
+        <GildedCornerSet color={palette.accentGold} opacity={palette.isDark ? 0.7 : 0.4} />
+
+        {/* Center Royal Watermark Medallion */}
+        <RoyalMandalaWatermark color={palette.accentGold} className="top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-52 h-52 opacity-[0.05]" />
+
         {/* Top Header / Auspicious Invocation */}
-        <div className="p-4 sm:p-5 text-center flex flex-col justify-between flex-1">
+        <div className="relative z-10 p-4 sm:p-5 text-center flex flex-col justify-between flex-1">
           <div>
             <div className="flex items-center justify-between mb-2">
-              <span className="text-[9px] font-mono uppercase tracking-widest font-bold" style={{ color: palette.accentGold }}>
-                {isCorporate ? 'OFFICIAL PASS' : 'SHUVO BIBAHO'}
+              <span className="text-[9px] font-mono uppercase tracking-widest font-bold flex items-center space-x-1" style={{ color: palette.accentGold }}>
+                <span>✦</span>
+                <span>{isCorporate ? 'OFFICIAL PASS' : 'SHUVO BIBAHO'}</span>
+                <span>✦</span>
               </span>
               <span className="text-[9px] font-mono uppercase tracking-widest font-semibold" style={{ color: palette.textMuted }}>
                 PASS #{invitation.id.slice(-6).toUpperCase()}
               </span>
             </div>
 
-            <div className="text-[11px] font-serif-elegant italic tracking-wider font-semibold mb-1" style={{ color: palette.textSecondary }}>
-              {isCorporate ? 'OFFICIAL EXECUTIVE SUMMIT 2026' : 'بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ'}
+            <div className="text-[11px] font-serif-elegant italic tracking-widest font-semibold mb-1" style={{ color: palette.textSecondary }}>
+              {isCorporate ? '— ✦ OFFICIAL EXECUTIVE SUMMIT 2026 ✦ —' : '— ✦ بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ ✦ —'}
             </div>
 
             <div className="text-[9px] font-mono uppercase tracking-widest font-semibold opacity-85" style={{ color: palette.textMuted }}>
@@ -205,9 +219,15 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({
               className="text-2xl sm:text-3xl font-heading font-extrabold tracking-tight uppercase leading-tight my-2.5 drop-shadow-xs"
               style={{ color: palette.textPrimary }}
             >
-              {isCorporate
-                ? (corporate?.eventHeading || invitation.title)
-                : `${couple.brideName} & ${couple.groomName}`}
+              {isCorporate ? (
+                corporate?.eventHeading || invitation.title
+              ) : (
+                <>
+                  <span>{couple.brideName}</span>
+                  <span className="font-serif-elegant italic font-normal text-amber-300 opacity-90 mx-1.5">&amp;</span>
+                  <span>{couple.groomName}</span>
+                </>
+              )}
             </h1>
 
             <p className="text-[11px] font-serif-elegant italic max-w-xs mx-auto leading-relaxed" style={{ color: palette.textBody }}>
@@ -376,12 +396,23 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({
         style={{ backgroundColor: palette.cardBg, borderColor: palette.borderRule }}
         className="relative rounded-2xl border flex flex-col justify-between overflow-hidden min-h-[640px]"
       >
+        {/* Luxury Tactile White Grain Texture on Dark Cardstock */}
+        {palette.isDark && <div className="dark-card-grain" />}
+
+        {/* Delicate Inner Gilded Frame & Corner Filigree */}
+        <div className="absolute inset-1.5 border border-dashed rounded-xl pointer-events-none opacity-25" style={{ borderColor: palette.accentGold }} />
+        <GildedCornerSet color={palette.accentGold} opacity={palette.isDark ? 0.7 : 0.4} />
+
+        {/* Center Royal Watermark Medallion */}
+        <RoyalMandalaWatermark color={palette.accentGold} className="top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-52 h-52 opacity-[0.05]" />
+
         {/* Top Section: Program & Schedule Details */}
-        <div className="p-4 sm:p-5 text-left flex flex-col justify-between flex-1">
+        <div className="relative z-10 p-4 sm:p-5 text-left flex flex-col justify-between flex-1">
           <div>
             <div className="flex items-center justify-between border-b pb-2 mb-3" style={{ borderColor: palette.borderRule }}>
-              <h2 className="text-sm sm:text-base font-heading font-extrabold uppercase tracking-wide" style={{ color: palette.textPrimary }}>
-                {isCorporate ? 'SUMMIT PROGRAM & CODE' : 'CEREMONY SCHEDULE & DETAILS'}
+              <h2 className="text-sm sm:text-base font-heading font-extrabold uppercase tracking-wide flex items-center space-x-1.5" style={{ color: palette.textPrimary }}>
+                <span style={{ color: palette.accentGold }}>✦</span>
+                <span>{isCorporate ? 'SUMMIT PROGRAM & CODE' : 'CEREMONY SCHEDULE & DETAILS'}</span>
               </h2>
               <span className="text-[10px] font-mono font-bold" style={{ color: palette.accentGold }}>
                 PASS #{invitation.id.slice(-6).toUpperCase()}
@@ -520,9 +551,19 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({
           style={{ backgroundColor: palette.cardBg, borderColor: palette.borderRule }}
           className="relative rounded-xl sm:rounded-2xl border flex flex-row items-stretch overflow-hidden h-[345px]"
         >
+          {/* Luxury Tactile White Grain Texture on Dark Cardstock */}
+          {palette.isDark && <div className="dark-card-grain" />}
+
+          {/* Delicate Inner Gilded Frame & Corner Filigree */}
+          <div className="absolute inset-1.5 border border-dashed rounded-xl pointer-events-none opacity-25" style={{ borderColor: palette.accentGold }} />
+          <GildedCornerSet color={palette.accentGold} opacity={palette.isDark ? 0.7 : 0.4} />
+
+          {/* Center Royal Watermark Medallion */}
+          <RoyalMandalaWatermark color={palette.accentGold} className="top-1/2 left-1/3 -translate-x-1/2 -translate-y-1/2 w-64 h-64 opacity-[0.05]" />
+
           {/* Left Perforated Tear Strip */}
           <div
-            className="w-11 border-r flex flex-col items-center justify-between py-4 select-none shrink-0"
+            className="w-11 border-r flex flex-col items-center justify-between py-4 select-none shrink-0 relative z-10"
             style={{ borderColor: palette.borderRule }}
           >
             <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: palette.accentGold }} />
@@ -539,12 +580,12 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({
           </div>
 
           {/* Main Ticket Section (Equalized height with flex justify-between) */}
-          <div className="flex-1 p-4 sm:p-5 flex flex-col justify-between text-left min-w-0">
+          <div className="flex-1 p-4 sm:p-5 flex flex-col justify-between text-left min-w-0 relative z-10">
             {/* Top Line */}
             <div className="flex items-center justify-between border-b pb-2" style={{ borderColor: palette.borderRule }}>
               <div className="flex items-center space-x-2">
                 <span className="text-[10px] font-serif-elegant italic tracking-widest font-semibold" style={{ color: palette.textSecondary }}>
-                  {isCorporate ? 'OFFICIAL EXECUTIVE SUMMIT' : 'بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ'}
+                  {isCorporate ? '— ✦ OFFICIAL EXECUTIVE SUMMIT ✦ —' : '— ✦ بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ ✦ —'}
                 </span>
                 <span className="opacity-40" style={{ color: palette.textMuted }}>&bull;</span>
                 <span className="text-[9px] font-mono uppercase tracking-widest font-semibold" style={{ color: palette.textMuted }}>
@@ -552,8 +593,10 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({
                 </span>
               </div>
 
-              <div className="text-[10px] font-mono font-bold" style={{ color: palette.accentGold }}>
-                {isCorporate ? 'VIP ENTRY' : 'SHUVO BIBAHO'}
+              <div className="text-[10px] font-mono font-bold flex items-center space-x-1" style={{ color: palette.accentGold }}>
+                <span>✦</span>
+                <span>{isCorporate ? 'VIP ENTRY' : 'SHUVO BIBAHO'}</span>
+                <span>✦</span>
               </div>
             </div>
 
@@ -563,9 +606,15 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({
                 className="text-2xl sm:text-3xl font-heading font-extrabold tracking-tight uppercase truncate drop-shadow-xs"
                 style={{ color: palette.textPrimary }}
               >
-                {isCorporate
-                  ? (corporate?.eventHeading || invitation.title)
-                  : `${couple.brideName} & ${couple.groomName}`}
+                {isCorporate ? (
+                  corporate?.eventHeading || invitation.title
+                ) : (
+                  <>
+                    <span>{couple.brideName}</span>
+                    <span className="font-serif-elegant italic font-normal text-amber-300 opacity-90 mx-1.5">&amp;</span>
+                    <span>{couple.groomName}</span>
+                  </>
+                )}
               </h1>
               <p className="text-[11px] font-serif-elegant italic mt-0.5 truncate" style={{ color: palette.textBody }}>
                 {isCorporate
@@ -713,17 +762,28 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({
           style={{ backgroundColor: palette.cardBg, borderColor: palette.borderRule }}
           className="relative rounded-xl sm:rounded-2xl border flex flex-row items-stretch overflow-hidden h-[345px]"
         >
+          {/* Luxury Tactile White Grain Texture on Dark Cardstock */}
+          {palette.isDark && <div className="dark-card-grain" />}
+
+          {/* Delicate Inner Gilded Frame & Corner Filigree */}
+          <div className="absolute inset-1.5 border border-dashed rounded-xl pointer-events-none opacity-25" style={{ borderColor: palette.accentGold }} />
+          <GildedCornerSet color={palette.accentGold} opacity={palette.isDark ? 0.7 : 0.4} />
+
+          {/* Center Royal Watermark Medallion */}
+          <RoyalMandalaWatermark color={palette.accentGold} className="top-1/2 left-2/3 -translate-x-1/2 -translate-y-1/2 w-64 h-64 opacity-[0.05]" />
+
           {/* Left Stub: RSVP */}
           <div
-            className="w-56 p-4 sm:p-5 flex flex-col justify-between border-r text-left shrink-0"
+            className="w-56 p-4 sm:p-5 flex flex-col justify-between border-r text-left shrink-0 relative z-10"
             style={{
               borderColor: palette.borderRule,
               backgroundColor: palette.stubBg,
             }}
           >
             <div>
-              <h3 className="font-heading font-extrabold text-base uppercase tracking-wider" style={{ color: palette.textPrimary }}>
-                RSVP
+              <h3 className="font-heading font-extrabold text-base uppercase tracking-wider flex items-center space-x-1" style={{ color: palette.textPrimary }}>
+                <span style={{ color: palette.accentGold }}>✦</span>
+                <span>RSVP</span>
               </h3>
               <p className="text-[10px] font-mono mb-2" style={{ color: palette.textMuted }}>Please respond</p>
 
@@ -771,7 +831,7 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({
           </div>
 
           {/* Right Main Section: Event Schedule */}
-          <div className="flex-1 p-4 sm:p-5 flex flex-col justify-between text-left min-w-0">
+          <div className="flex-1 p-4 sm:p-5 flex flex-col justify-between text-left min-w-0 relative z-10">
             <div>
               <div className="flex items-center justify-between border-b pb-2 mb-2" style={{ borderColor: palette.borderRule }}>
                 <h2 className="text-sm sm:text-base font-heading font-extrabold uppercase tracking-wide" style={{ color: palette.textPrimary }}>

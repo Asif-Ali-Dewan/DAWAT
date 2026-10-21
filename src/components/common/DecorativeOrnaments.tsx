@@ -223,3 +223,51 @@ export const CircularTicketStamp: React.FC<{
     </div>
   );
 };
+
+export const RoyalMandalaWatermark: React.FC<{ color?: string; className?: string }> = ({
+  color = '#D4AF37',
+  className = '',
+}) => (
+  <svg
+    viewBox="0 0 200 200"
+    className={`absolute pointer-events-none select-none ${className}`}
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <circle cx="100" cy="100" r="90" stroke={color} strokeWidth="0.8" strokeDasharray="4 3" opacity="0.6" />
+    <circle cx="100" cy="100" r="72" stroke={color} strokeWidth="0.75" opacity="0.8" />
+    <circle cx="100" cy="100" r="52" stroke={color} strokeWidth="1" opacity="0.7" />
+    <circle cx="100" cy="100" r="30" stroke={color} strokeWidth="0.75" strokeDasharray="3 3" opacity="0.6" />
+    <path
+      d="M100 15L108 80L170 38L126 92L185 100L126 108L170 162L108 120L100 185L92 120L30 162L74 108L15 100L74 92L30 38L92 80Z"
+      stroke={color}
+      strokeWidth="0.8"
+      opacity="0.8"
+    />
+  </svg>
+);
+
+export const GildedCornerSet: React.FC<{ color?: string; opacity?: number }> = ({
+  color = '#D4AF37',
+  opacity = 0.5,
+}) => (
+  <>
+    <div
+      className="absolute top-2 left-2 w-3.5 h-3.5 border-t-1.5 border-l-1.5 pointer-events-none rounded-tl-xs"
+      style={{ borderColor: color, opacity }}
+    />
+    <div
+      className="absolute top-2 right-2 w-3.5 h-3.5 border-t-1.5 border-r-1.5 pointer-events-none rounded-tr-xs"
+      style={{ borderColor: color, opacity }}
+    />
+    <div
+      className="absolute bottom-2 left-2 w-3.5 h-3.5 border-b-1.5 border-l-1.5 pointer-events-none rounded-bl-xs"
+      style={{ borderColor: color, opacity }}
+    />
+    <div
+      className="absolute bottom-2 right-2 w-3.5 h-3.5 border-b-1.5 border-r-1.5 pointer-events-none rounded-br-xs"
+      style={{ borderColor: color, opacity }}
+    />
+  </>
+);
+
