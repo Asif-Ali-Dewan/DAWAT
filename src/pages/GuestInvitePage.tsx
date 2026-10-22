@@ -165,7 +165,7 @@ export const GuestInvitePage: React.FC<GuestInvitePageProps> = ({ slug, onNaviga
         <button
           type="button"
           onClick={playHarmonicChime}
-          className="p-2.5 rounded-full bg-white/95 backdrop-blur-md border border-stone-200 text-[#350010] hover:scale-105 transition"
+          className="p-2.5 rounded-full bg-white/95 backdrop-blur-md border border-stone-200 text-[#350010] hover:scale-105 transition shadow-xs"
           title="Play Celebration Chime"
         >
           {audioPlaying ? <Volume2 className="w-4 h-4 animate-bounce text-[#350010]" /> : <Volume2 className="w-4 h-4" />}
@@ -173,10 +173,10 @@ export const GuestInvitePage: React.FC<GuestInvitePageProps> = ({ slug, onNaviga
 
         <button
           type="button"
-          onClick={() => onNavigate('/dashboard')}
-          className="px-3.5 py-1.5 rounded-full bg-white/95 backdrop-blur-md border border-stone-200 text-xs font-bold text-stone-800 hover:bg-[#350010] hover:text-white transition"
+          onClick={() => onNavigate('/')}
+          className="px-3.5 py-1.5 rounded-full bg-white/95 backdrop-blur-md border border-stone-200 text-xs font-bold text-stone-800 hover:bg-[#350010] hover:text-white transition shadow-xs"
         >
-          Inviter Dashboard
+          DAWAT Card Studio
         </button>
       </div>
 
@@ -232,17 +232,20 @@ export const GuestInvitePage: React.FC<GuestInvitePageProps> = ({ slug, onNaviga
               onNavigateToPhotos={() => onNavigate(`/photos/${invitation.slug}`)}
             />
 
-            {/* Quick Guest Portal Links */}
+            {/* Quick Guest Actions */}
             <div className="text-center pt-4 pb-8 space-y-3">
-              <div className="flex items-center justify-center space-x-3">
-                <button
-                  type="button"
-                  onClick={() => onNavigate(`/photos/${invitation.slug}`)}
-                  className="inline-flex items-center space-x-1.5 px-4 py-2 rounded-xl text-xs font-semibold bg-white text-stone-800 border border-stone-300 hover:bg-stone-50 transition"
-                >
-                  <Camera className="w-3.5 h-3.5 text-[#350010]" />
-                  <span>Check Event Photos</span>
-                </button>
+              <div className="flex flex-wrap items-center justify-center gap-3">
+                {(invitation.driveFolderUrl || invitation.photoFolderUrl) && (
+                  <a
+                    href={invitation.driveFolderUrl || invitation.photoFolderUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center space-x-1.5 px-4 py-2 rounded-xl text-xs font-semibold bg-white text-stone-800 border border-stone-300 hover:bg-stone-50 transition shadow-xs"
+                  >
+                    <Camera className="w-3.5 h-3.5 text-[#350010]" />
+                    <span>View Photos on Google Drive</span>
+                  </a>
+                )}
 
                 {invitation.rsvpEnabled && (
                   <button

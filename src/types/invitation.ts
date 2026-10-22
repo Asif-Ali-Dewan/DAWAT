@@ -63,8 +63,9 @@ export interface Invitation {
   receiver: ReceiverInfo;
   specialNote?: string;
   theme: ThemeConfiguration;
-  photoFolderUrl?: string;
-  photoStatus: 'available' | 'unavailable';
+  photoFolderUrl?: string; // Google Drive or cloud photo folder URL
+  driveFolderUrl?: string; // Alias for Google Drive link
+  photoStatus?: 'available' | 'unavailable';
   photoUnavailableQuote?: string;
   rsvpEnabled: boolean;
   showQrCode?: boolean;

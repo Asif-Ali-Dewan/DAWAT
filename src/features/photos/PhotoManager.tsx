@@ -26,7 +26,7 @@ export const PhotoManager: React.FC<PhotoManagerProps> = ({
   photos,
   onInvitationUpdated,
 }) => {
-  const [status, setStatus] = useState<'available' | 'unavailable'>(invitation.photoStatus);
+  const [status, setStatus] = useState<'available' | 'unavailable'>(invitation.photoStatus || 'unavailable');
   const [folderUrl, setFolderUrl] = useState(invitation.photoFolderUrl || '');
   const [quote, setQuote] = useState(
     invitation.photoUnavailableQuote || PHOTOGRAPHER_QUOTES[0]

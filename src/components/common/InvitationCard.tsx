@@ -204,8 +204,13 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({
   const palette = getTicketPalette(theme.cardColor || (isCorporate ? '#0F172A' : '#350010'), theme.accentColor);
 
   useEffect(() => {
-    const photoUrl = `${window.location.origin}/#/photos/${invitation.slug}`;
-    generateQrCode(photoUrl, {
+    // Priority: Google Drive photo folder URL -> photoFolderUrl -> Guest Invite URL
+    const targetUrl =
+      invitation.driveFolderUrl ||
+      invitation.photoFolderUrl ||
+      `${window.location.origin}/#/invite/${invitation.slug}`;
+
+    generateQrCode(targetUrl, {
       width: 180,
       margin: 1,
       color: {
@@ -213,7 +218,7 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({
         light: '#FFFFFF',
       },
     }).then(setQrCodeDataUrl);
-  }, [invitation.slug]);
+  }, [invitation.driveFolderUrl, invitation.photoFolderUrl, invitation.slug]);
 
   // Dynamic Framing Inlay responding to theme.borderStyle
   const renderFramingInlay = () => {
@@ -291,6 +296,7 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({
 
   const renderVerticalFront = () => (
     <div
+      id="ticket-card-front"
       style={{ backgroundColor: palette.outerFrame, borderColor: palette.outerBorder }}
       className="relative rounded-3xl p-3 sm:p-3.5 shadow-2xl border transition-all select-none w-full max-w-md mx-auto"
     >
@@ -456,11 +462,20 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({
         >
           {showQr && qrCodeDataUrl ? (
             <div className="flex flex-col items-center">
-              <div className="p-2 bg-white rounded-xl shadow-md border" style={{ borderColor: palette.accentGold }}>
+              <a
+                href={invitation.driveFolderUrl || invitation.photoFolderUrl || '#'}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2 bg-white rounded-xl shadow-md border hover:scale-105 transition-transform"
+                style={{ borderColor: palette.accentGold }}
+                title="Scan with phone camera or tap to open Google Drive Photos"
+              >
                 <img src={qrCodeDataUrl} alt="QR Code" className="w-20 h-20 object-contain rounded-lg" />
-              </div>
+              </a>
               <span className="text-[9px] font-mono font-bold tracking-widest uppercase mt-1.5" style={{ color: palette.accentGold }}>
-                SCAN FOR PHOTOS & DIGITAL CHECK-IN
+                {invitation.driveFolderUrl || invitation.photoFolderUrl
+                  ? 'SCAN FOR GOOGLE DRIVE PHOTOS'
+                  : 'SCAN FOR DIGITAL PASS & PHOTOS'}
               </span>
             </div>
           ) : (
@@ -504,6 +519,7 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({
 
   const renderVerticalBack = () => (
     <div
+      id="ticket-card-back"
       style={{ backgroundColor: palette.outerFrame, borderColor: palette.outerBorder }}
       className="relative rounded-3xl p-3 sm:p-3.5 shadow-2xl border transition-all select-none w-full max-w-md mx-auto"
     >
@@ -662,6 +678,7 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({
   const renderHorizontalFront = () => (
     <div className="overflow-x-auto w-full pb-2">
       <div
+        id="ticket-card-front-horizontal"
         style={{ backgroundColor: palette.outerFrame, borderColor: palette.outerBorder }}
         className="relative rounded-2xl sm:rounded-3xl p-3 sm:p-3.5 shadow-2xl border transition-all select-none min-w-[680px] w-full"
       >
@@ -823,11 +840,20 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({
           >
             {showQr && qrCodeDataUrl ? (
               <div className="flex flex-col items-center my-0.5">
-                <div className="p-1.5 bg-white rounded-xl shadow-md border" style={{ borderColor: palette.accentGold }}>
+                <a
+                  href={invitation.driveFolderUrl || invitation.photoFolderUrl || '#'}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-1.5 bg-white rounded-xl shadow-md border hover:scale-105 transition-transform"
+                  style={{ borderColor: palette.accentGold }}
+                  title="Scan with phone camera or tap to open Google Drive Photos"
+                >
                   <img src={qrCodeDataUrl} alt="QR Code" className="w-20 h-20 object-contain rounded-lg" />
-                </div>
+                </a>
                 <span className="text-[9px] font-mono font-bold tracking-widest uppercase mt-1" style={{ color: palette.accentGold }}>
-                  SCAN FOR ENTRY
+                  {invitation.driveFolderUrl || invitation.photoFolderUrl
+                    ? 'GOOGLE DRIVE PHOTOS'
+                    : 'SCAN FOR ENTRY'}
                 </span>
               </div>
             ) : (
@@ -872,6 +898,7 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({
   const renderHorizontalBack = () => (
     <div className="overflow-x-auto w-full pb-2">
       <div
+        id="ticket-card-back-horizontal"
         style={{ backgroundColor: palette.outerFrame, borderColor: palette.outerBorder }}
         className="relative rounded-2xl sm:rounded-3xl p-3 sm:p-3.5 shadow-2xl border transition-all select-none min-w-[680px] w-full"
       >
